@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-12">
+    <a [routerLink]="['/agregar-proyecto']">
+      <button class="btn btn-success btn-sm float-right mb-1">
+        <span class="fa fa-plus"></span>
+        Proyecto
+      </button>
+    </a>
+  </div>
+  
+  <div class="w-100"></div>
+    <div class="col-md-12">
+      <div class="card bg-default">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-4" *ngFor="let proyecto of proyectos; let j=index">
+
+              <div class="card">
+                <div class="card-header" style="background: #d0c9c9;">
+                  <p class="card-title text-white">
+                    <strong>{{proyecto.pro_nombre}}</strong>
+                    <a class="btn btn-secondary btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.IDpro]">
+                      <i class="fas fa-upload"></i>
+                    </a>
+                  </p>
+                </div>
+                <div class="card-body">
+                    {{proyecto.pro_descripcion}}
+                </div>
+                <div class="card-footer">
+                  <div class="btn-group">
+                    <a role="button" class="btn btn-danger btn-sm" (click)="borrarproyecto(proyecto.IDpro)">
+                      <span class="fa fa-trash"></span>
+                      Borrar
+                    </a>
+                    <a href="#proyecto{{proyecto.IDpro}}" role="button"
+                    class="btn btn-primary btn-sm" data-toggle="modal" (click)="editarproyecto(proyecto.IDpro)" >
+                      <span class="fa fa-edit"></span>
+                      Editar
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="proyecto{{proyecto.IDpro}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar proyecto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" *ngIf="getproyecto">
+                        <div class="form-group">
+                          <input type="text" value="{{getproyecto['pro_nombre']}}" name="nombre" 
+                          class="form-control" [(ngModel)]="modelo.nombre">
+                        </div>
+                        <div class="form-group">
+                          <textarea name="descripcion" class="form-control" [(ngModel)]="modelo.descripcion" >
+                            {{getproyecto['pro_descripcion']}}
+                          </textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getproyecto['IDpro'])">Guardar Cambios</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--FIN DEL MODAL -->
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-success">
+          <p class="card-title">Expericia laboral</p>
+        </div>
+        <div class="card-body">
+          <div class="card" *ngFor="let trabajo of trabajos">
+            <div class="card-body">
+              <div class="row">
+                  <div class="col-md-10">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>Empresa:</td><td>{{trabajo.exp_empresa}}</td>
+                        </tr>
+                        <tr>
+                          <td>Duracion:</td><td>{{trabajo.exp_duracion}}</td>
+                        </tr>
+                        <tr>
+                          <td>Fecha:</td><td>{{trabajo.exp_fechaInicio}} A {{trabajo.exp_fechaFin}}</td>
+                        </tr>
+                        <tr>
+                          <td>Cargo:</td><td>{{trabajo.exp_cargo}}</td>
+                        </tr>
+                        <tr>
+                          <td>Descripcion:</td><td>{{trabajo.exp_descripcion}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-2">
+                    <h1><i class="fas fa-edit"></i></h1>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

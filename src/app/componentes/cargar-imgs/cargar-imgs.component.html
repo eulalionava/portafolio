@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card"> 
+        <div class="card-header" *ngFor="let proyec of proyectos">
+          <div class="row">
+            <div class="col-md-10">
+              <h5 class="title">Imagenes del proyecto : {{proyec.pro_nombre}}</h5>
+            </div>
+            <div class="col-md-2">
+              <a [routerLink]="['/proyectos']" class="btn btn-success btn-sm float-right">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                Regresar
+              </a>
+            </div>
+          </div>
+        </div> 
+        <div class="card-body">
+          <form #formAgregar="ngForm">
+            <div class="form-group">
+              <div class="alert alert-danger" *ngIf="error">
+                No se pudo cargar la imagen,vuelve a intentarlo
+              </div>
+              <div class="alert alert-success" *ngIf="success">
+                Imagen cargada correctamente,cargar nuevamente o 
+                <a [routerLink]="['/proyectos']">
+                  regresa
+                </a>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4">
+                  <input type="file" name="imagen"
+                   (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
+                </div>
+                <div class="col-md-4">
+                  <input type="button" class="btn btn-secondary btn-sm" (click)="agregarImgs()" value="Agregar"
+                  [disabled]="!formAgregar.form.valid">
+                </div>
+              </div>
+            </div>
+
+          </form>
+          <hr>
+          <!--Galeria de imagenes del proyecto-->
+          <div class="row">
+            
+            <div class="col-md-6 mb-2" *ngFor="let picture of imagenes">
+                <div class="card">
+                  <div class="card-header">
+                      <img src="http://localhost:8080/appiPortafolio/imgs/{{picture.img_url}}" class="img-fuild w-100" alt="">
+                  </div>
+                </div>
+            </div>
+        </div>    
+      </div>
+    </div>
+  </div>
+  

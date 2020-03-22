@@ -1,0 +1,45 @@
+<div class="wrapper">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#"><b>PORTAFOLIO</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['inicio']">INICIO <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['tecnologia']">TECNOLOGIAS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['proyectos']">PROYECTOS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/experiencia']">EXPERIENCIA</a>
+            </li>
+          </ul>
+      </div>
+      <form class="form-inline">
+        <div class="dropdown show">
+            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Eulalio Cruz Nava
+            </a>
+            
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Mi perfil</a>
+                <a class="dropdown-item" [routerLink]="['logeo']">Administrar</a>
+                <a class="dropdown-item" href="#">Salir</a>
+            </div>
+        </div>
+        
+        <img src="../assets/IMG/Eulalio.jpg" class="rounded-circle" width="50" height="50" 
+        alt="Imagen">
+      </form>
+  </nav>
+  <div class="card" id="contenedor" style="width: 100%;">
+      <div class="card-body">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>
