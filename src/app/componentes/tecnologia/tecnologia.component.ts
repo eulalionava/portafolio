@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { TecnologiaService } from '../../services/tecnologia.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { ChangeDetectorRef,ChangeDetectionStrategy } from '@angular/core';
 
 import {Tecnologia} from '../../modelos/tecnologia';
@@ -9,7 +10,7 @@ import {Tecnologia} from '../../modelos/tecnologia';
   selector: 'app-tecnologia',
   templateUrl: './tecnologia.component.html',
   styleUrls: ['./tecnologia.component.css'],
-  providers:[TecnologiaService]
+  providers:[TecnologiaService,UsuarioService]
 })
 export class TecnologiaComponent implements OnInit {
   public tecnologias:any;
@@ -24,6 +25,7 @@ export class TecnologiaComponent implements OnInit {
 
   constructor(
     private _serviceTecnologia:TecnologiaService,
+    public _serviceUsuario:UsuarioService,
     private _route:ActivatedRoute,
     private _router:Router,
     private cd: ChangeDetectorRef

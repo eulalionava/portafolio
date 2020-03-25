@@ -2,16 +2,19 @@
   <div class="col-md-5">
     <div class="card">
       <div class="card-header bg-primary text-white">
-       <p class="card-title">Iniciar Sesion</p> 
+       <p class="card-title" style="text-align: center;">Iniciar Sesion</p> 
       </div>
       <div class="card-body">
         <form #formLogin="ngForm">
+          <div class="alert alert-danger" *ngIf="fallo">
+            Usuario y/o Contraseña incorrectos
+          </div>
           <div class="form-group">
-            <input type="text" name="user" #user="ngModel" [(ngModel)]="usuario.usuario"
+            <input type="email" name="user" #user="ngModel" [(ngModel)]="usuario.usuario"
              class="form-control" placeholder="Usuario" required>
           </div>
           <div class="form-group">
-            <input type="text" name="clave" #clave="ngModel" [(ngModel)]="usuario.contrasena"
+            <input type="password" name="clave" #clave="ngModel" [(ngModel)]="usuario.contrasena"
              class="form-control" placeholder="Contraseña" required>
           </div>
           <div class="form-group">

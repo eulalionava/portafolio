@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header bg-success">
-          <p class="card-title">Expericia laboral</p>
+        <div class="card-header bg-primary">
+          <h5 class="card-title text-white">Experiencia laboral</h5>
         </div>
         <div class="card-body">
           <div class="card" *ngFor="let trabajo of trabajos">
@@ -31,7 +31,9 @@
                     </table>
                   </div>
                   <div class="col-md-2">
-                    <h1><i class="fas fa-edit"></i></h1>
+                    <a [routerLink]="['/editar-experiencia',trabajo.IDexp]">
+                      <h1><i class="fas fa-edit"></i></h1>
+                    </a>
                   </div>
               </div>
             </div>

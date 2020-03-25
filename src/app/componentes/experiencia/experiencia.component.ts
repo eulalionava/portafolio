@@ -25,9 +25,7 @@ export class ExperienciaComponent implements OnInit {
   experiencia(){
     this._serviceExpeciencia.getExperiencia().subscribe(
       response=>{
-        console.log(response);
         this.trabajos = response['data']; 
-        console.log(this.trabajos);
       },
       error=>{
         console.log(<any>error);

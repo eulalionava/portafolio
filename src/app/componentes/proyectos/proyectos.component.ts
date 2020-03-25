@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ProyectoService } from '../../services/proyecto.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { Proyecto } from '../../modelos/proyecto';
 
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
   styleUrls: ['./proyectos.component.css'],
-  providers:[ProyectoService]
+  providers:[ProyectoService,UsuarioService]
 })
 export class ProyectosComponent implements OnInit {
   public modelo:Proyecto;
@@ -15,7 +16,8 @@ export class ProyectosComponent implements OnInit {
   public proyectos = [];
 
   constructor(
-    private _serviceProyecto:ProyectoService
+    private _serviceProyecto:ProyectoService,
+    public _serviceUsuario:UsuarioService
   ) { 
     this.modelo = new Proyecto(1,'','','1');
   }

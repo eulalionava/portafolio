@@ -4,7 +4,7 @@
     <h5>Lenguajes de programacion</h5>
   </div>
   <div class="col-md-6">
-    <a [routerLink]="['/agregar-tecnologia']">
+    <a [routerLink]="['/agregar-tecnologia']" *ngIf="_serviceUsuario.Auth()">
       <button type="button" class="btn btn-primary btn-sm float-right">
         <span class="fa fa-plus"></span>
         Agregar
@@ -20,12 +20,12 @@
           <h1 class="card-title">{{tecnologia.tec_nombre}}</h1>
           <p class="card-text">{{tecnologia.tec_descripcion}}</p>
           <div class="btn-group">
-            <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.IDtec)">
+            <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.IDtec)" *ngIf="_serviceUsuario.Auth()">
               <span class="fa fa-trash"></span>
               Borrar
             </button>
             <a href="#tec{{tecnologia.IDtec}}" role="button" class="btn btn-success btn-sm" data-toggle="modal" 
-            (click)="editar(tecnologia.IDtec)">
+            (click)="editar(tecnologia.IDtec)" *ngIf="_serviceUsuario.Auth()">
               <span class="fa fa-edit"></span>
               Editar
             </a>

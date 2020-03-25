@@ -1,9 +1,12 @@
 export class Experiencia{
     constructor(
         public id:number,
-        public nombre:string,
+        public empresa:string,
+        public duracion:string,
+        public inicio:string,
+        public fin:string,
+        public cargo:string,
         public descripcion:string,
-        public imagen:string,
         public activo:string
     ){
 

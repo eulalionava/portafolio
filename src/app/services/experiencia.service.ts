@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable} from 'rxjs';
 
 import { GLOBAL } from './global';
+import { Experiencia } from '../modelos/experiencia';
 
 @Injectable()
 export class ExperienciaService{
@@ -21,5 +22,22 @@ export class ExperienciaService{
         return this._http.post(this.url + 'trabajos',{headers:headers})
         .pipe(map(res=>res));
         
+    }
+
+    getExpPorId(idexp){
+        let json = JSON.stringify({idexp:idexp});
+        let params = 'json='+json;
+        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+
+        return this._http.post(this.url + 'getExpID',params,{headers:headers}).pipe(map(res=>res));
+
+    }
+
+    editExperience(expeciencia:Experiencia){
+        let json = JSON.stringify({expe:expeciencia});
+        let params = 'json='+json;
+        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+
+        return this._http.post(this.url + 'guardarCambios',params,{headers:headers}).pipe(map(res=>res));
     }
 }

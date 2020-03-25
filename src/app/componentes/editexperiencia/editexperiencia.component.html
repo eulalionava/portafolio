@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-primary d-flex">
+            <div class="col-md-10">
+              <h5 class="card-title text-white">Editar datos</h5>
+            </div>
+            <div class="col-md-2 float-right">
+              <a [routerLink]="['/experiencia']">
+                <button class="btn btn-success">
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  Regresar
+                </button>
+              </a>
+            </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="">Empresa:</label>
+            <input type="text" class="form-control" [(ngModel)]="experiencia.empresa">
+          </div>
+          <div class="form-group">
+            <label for="">Duracion:</label>
+            <input type="text" class="form-control" [(ngModel)]="experiencia.duracion">
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="">Fecha Inicio:</label>
+                <input type="date" class="form-control" [(ngModel)]="experiencia.inicio">
+              </div>
+              <div class="col-md-6">
+                <label for="">Fecha Fin:</label>
+                <input type="date" class="form-control" [(ngModel)]="experiencia.fin">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Cargo:</label>
+            <input type="text" class="form-control" [(ngModel)]="experiencia.cargo">
+          </div>
+          <div class="form-group">
+            <label for="">Observaciones:</label>
+            <input type="text" class="form-control" [(ngModel)]="experiencia.descripcion">
+          </div>
+          <div class="form-group">
+              <input type="button" value="Gradar cambios" class="btn btn-success form-control" (click)="guardarCambios()" >
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

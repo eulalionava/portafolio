@@ -10,6 +10,7 @@ import { AgregarTecComponent } from '../app/componentes/agregar-tec/agregar-tec.
 import { AddproyectoComponent } from '../app/componentes/addproyecto/addproyecto.component';
 import { CargarImgsComponent } from '../app/componentes/cargar-imgs/cargar-imgs.component';
 import { ExperienciaComponent } from '../app/componentes/experiencia/experiencia.component';
+import { EditexperienciaComponent } from '../app/componentes/editexperiencia/editexperiencia.component';
 
 //Rutas
 const appRoutes:Routes = [
@@ -22,6 +23,7 @@ const appRoutes:Routes = [
     {path:'proyectos',component:ProyectosComponent},
     {path:'experiencia',component:ExperienciaComponent},
     {path:'agregar-proyecto',component:AddproyectoComponent},
+    {path:'editar-experiencia/:idExp',component:EditexperienciaComponent},
     {path:'cargar-imagenes/:idpro',component:CargarImgsComponent},
 
     {path:'**', component:InicioComponent}

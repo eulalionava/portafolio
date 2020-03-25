@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'miportafolio';
+
+  salir(){
+    localStorage.clear();
+  }
 }
+

@@ -9,6 +9,7 @@ import { Usuario } from '../../modelos/usuario';
   providers:[UsuarioService]
 })
 export class LoginComponent implements OnInit {
+  public fallo:boolean;
   public usuario:Usuario;
 
   constructor(
@@ -20,10 +21,24 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fallo = false;
   }
 
   iniciar(){
-    console.log(this.usuario.usuario +" " + this.usuario.contrasena);
+    this._usuarioService.iniciarsesion(this.usuario.usuario,this.usuario.contrasena).subscribe(
+      response=>{
+        console.log(response);
+        if(response['code'] == 200){
+          localStorage.setItem('admin',JSON.stringify(response['data'][0]));
+          this._router.navigate(['/inicio']);
+        }else{
+          this.fallo = true;
+        }
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
   }
 
 }

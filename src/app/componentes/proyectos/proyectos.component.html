@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <a [routerLink]="['/agregar-proyecto']">
+    <a [routerLink]="['/agregar-proyecto']" *ngIf="_serviceUsuario.Auth()">
       <button class="btn btn-success btn-sm float-right mb-1">
         <span class="fa fa-plus"></span>
         Proyecto
@@ -19,7 +19,8 @@
                 <div class="card-header" style="background: #d0c9c9;">
                   <p class="card-title text-white">
                     <strong>{{proyecto.pro_nombre}}</strong>
-                    <a class="btn btn-secondary btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.IDpro]">
+                    <a class="btn btn-secondary btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.IDpro]"
+                    *ngIf="_serviceUsuario.Auth()" >
                       <i class="fas fa-upload"></i>
                     </a>
                   </p>
@@ -27,14 +28,14 @@
                 <div class="card-body">
                     {{proyecto.pro_descripcion}}
                 </div>
-                <div class="card-footer">
+                <div class="card-footer" *ngIf="_serviceUsuario.Auth()">
                   <div class="btn-group">
                     <a role="button" class="btn btn-danger btn-sm" (click)="borrarproyecto(proyecto.IDpro)">
                       <span class="fa fa-trash"></span>
                       Borrar
                     </a>
                     <a href="#proyecto{{proyecto.IDpro}}" role="button"
-                    class="btn btn-primary btn-sm" data-toggle="modal" (click)="editarproyecto(proyecto.IDpro)" >
+                    class="btn btn-primary btn-sm" data-toggle="modal" (click)="editarproyecto(proyecto.IDpro)">
                       <span class="fa fa-edit"></span>
                       Editar
                     </a>
