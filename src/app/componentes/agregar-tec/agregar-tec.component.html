@@ -22,9 +22,7 @@
           <div class="form-group">
             <label for="tipo">Tipo Tecnologia:</label>
             <select name="tipo" id="" class="form-control" #tipo="ngModel" [(ngModel)]="tecnologia.tipo">
-              <option value="1">Lenguaje</option>
-              <option value="2">Libreria o framawork</option>
-              <option value="3">Base de datos</option>
+              <option *ngFor="let tipo of tiposTec" value="{{tipo.tipo_id}}">{{tipo.tipo_nombre}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -32,7 +30,7 @@
             <input type="file" name="imagen"
              (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
           </div>
-          <input type="button" class="btn btn-primary" (click)="agregarTecnologia()" value="Agregar"
+          <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar"
           [disabled]="!formAgregar.form.valid">
         </form>
       </div>    

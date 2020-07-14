@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card"> 
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-9">
+            <h4 class="title">Agregar un nuevo administrador de portafolio</h4>
+          </div>
+          <div class="col-md-3 text-white">
+            <a [routerLink]="['/inicio']" class="btn btn-success btn-sm float-right">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              Regresar
+            </a>
+          </div>
+        </div>
+      </div> 
+      <div class="card-body">
+        <form #formAgregar="ngForm">
+          <div class="form-group">
+
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="txtNombre" #txtNombre="ngModel" [(ngModel)]="usuario.nombre"
+             class="form-control" maxlength="25" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Apellidos:</label>
+            <input type="text" name="txtApellido" #txtApellido="ngModel" [(ngModel)]="usuario.apellidos"
+             class="form-control" maxlength="45" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Edad:</label>
+            <input type="text" name="txtEdad" #txtEdad="ngModel" [(ngModel)]="usuario.edad"
+             class="form-control" maxlength="3" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Direccion:</label>
+            <input type="text" name="txtDireccion" #txtDireccion="ngModel" [(ngModel)]="usuario.direccion"
+             class="form-control" maxlength="100" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Telefono:</label>
+            <input type="text" name="txtTelefono" #txtTelefono="ngModel" [(ngModel)]="usuario.telefono"
+             class="form-control" maxlength="15" required>
+          </div>
+          <!-- <div class="form-group">
+            <label for="descripcion">Imagen:</label>
+            <input type="file" name="txtImagen" #txtImagen="ngModel" [(ngModel)]="usuario.imagen"
+             class="form-control" (change)="fileChangeEvent($event)" required>
+          </div> -->
+          <div class="form-group">
+            <label for="descripcion">Usuario:</label>
+            <input type="text" name="txtUsuario" #txtUsuario="ngModel" [(ngModel)]="usuario.usuario"
+             class="form-control" maxlength="45" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Contraseña:</label>
+            <input type="password" name="txtClave" #txtClave="ngModel" [(ngModel)]="usuario.contrasena"
+             class="form-control" maxlength="45" required>
+          </div>
+          <input type="button" class="btn btn-success" (click)="addAdmin()" value="Agregar administrador"
+          [disabled]="!formAgregar.form.valid">
+        </form>
+      </div>    
+    </div>
+  </div>
+</div>
+

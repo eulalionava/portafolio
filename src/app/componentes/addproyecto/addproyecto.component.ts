@@ -20,16 +20,16 @@ export class AddproyectoComponent implements OnInit {
     private _route:ActivatedRoute,
     private _router:Router
   ){
-    this.proyecto = new Proyecto(1,'','','');
+    this.proyecto = new Proyecto(1,'','','S');
    }
 
   ngOnInit() {
   }
 
   agregarProyecto(){
-    this.proyecto.activo = '1';
     this._serviceProyecto.addProyecto(this.proyecto).subscribe(
       response=>{
+        console.log(response);
         this._router.navigate(['/proyectos']);
       },
       error=>{

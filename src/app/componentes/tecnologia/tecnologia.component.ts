@@ -9,7 +9,6 @@ import {Tecnologia} from '../../modelos/tecnologia';
 @Component({
   selector: 'app-tecnologia',
   templateUrl: './tecnologia.component.html',
-  styleUrls: ['./tecnologia.component.css'],
   providers:[TecnologiaService,UsuarioService]
 })
 export class TecnologiaComponent implements OnInit {
@@ -46,10 +45,12 @@ export class TecnologiaComponent implements OnInit {
   listaTecnologias(){
     this._serviceTecnologia.listadoTec().subscribe(
       response=>{
-        if(response['code'] == 200){
-          this.tecnologias = response['data'];
+        console.log(response);
+        if(response['ok']){
+          this.tecnologias = response['tecnologias'];
         }else{
           this.tecnologias = [];
+          console.log(response['message']);
         }
       },
       error=>{
@@ -60,29 +61,32 @@ export class TecnologiaComponent implements OnInit {
 
   //ELIMINAR UNA TECNOLOGIA
   borrar(idTec){
-    this._serviceTecnologia.eliminarTecnologia(idTec).subscribe(
-      response=>{
-        if(response['code'] == 200){
-          this.listaTecnologias();
-          this._router.navigate(['/tecnologia']);
-        }else{
-          alert(response['message']);
+    if(confirm("¿ La imagen se borrara,desea proseguir ?")){
+      this._serviceTecnologia.eliminarTecnologia(idTec).subscribe(
+        response=>{
+          console.log(response);
+          if(response['ok']){
+            this.listaTecnologias();
+            this._router.navigate(['/tecnologia']);
+          }else{
+            alert(response['message']);
+          }
+        },
+        error=>{
+          console.log(error);
         }
-      },
-      error=>{
-        console.log(error);
-      }
-    )
+      )
+
+    }
   }
   //EDITAR UNA TECNOLOGIA
   editar(idTec){
     this._serviceTecnologia.getTecnologia(idTec).subscribe(
       response=>{
-        if(response['code'] == 200){
-          this.getTecnologia = response['data'][0];
+        if(response['ok']){
+          this.getTecnologia = response['tecnologia'];
           this.datos.nombre = this.getTecnologia['tec_nombre'];
           this.datos.descrip = this.getTecnologia['tec_descripcion'];
-          console.log(this.getTecnologia);
         }
       },
       error=>{
@@ -93,11 +97,12 @@ export class TecnologiaComponent implements OnInit {
 
   //GUARDAR CAMBIOS
   guardarCambios(idTec){
+
     this.datos.id = idTec;
     this._serviceTecnologia.editartecnologia(this.datos).subscribe(
       response=>{
-        console.log(response);
-        this._router.navigate(['/tecnologia']);
+        alert(response['message']);
+        this.listaTecnologias();
       },
       error=>{
         console.log(<any>error);

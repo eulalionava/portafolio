@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private _route:ActivatedRoute,
     private _router:Router
   ) { 
-    this.usuario = new Usuario(1,'','','',0,'','','','','')
+    this.usuario = new Usuario(1,'','','',0,'','','','')
   }
 
   ngOnInit() {
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
     this._usuarioService.iniciarsesion(this.usuario.usuario,this.usuario.contrasena).subscribe(
       response=>{
         console.log(response);
-        if(response['code'] == 200){
-          localStorage.setItem('admin',JSON.stringify(response['data'][0]));
+        if(response['ok']){
+          localStorage.setItem('admin',JSON.stringify(response['usuario']));
           this._router.navigate(['/inicio']);
         }else{
           this.fallo = true;

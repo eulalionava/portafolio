@@ -3,6 +3,7 @@ import { Tecnologia } from '../../modelos/tecnologia';
 import { Router,ActivatedRoute,Params } from '@angular/router';
 import { GLOBAL } from '../../services/global';
 import { TecnologiaService } from '../../services/tecnologia.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-agregar-tec',
@@ -11,6 +12,7 @@ import { TecnologiaService } from '../../services/tecnologia.service';
 })
 export class AgregarTecComponent implements OnInit {
   public tecnologia:Tecnologia;
+  public tiposTec:any;
   public fileToUpload;
   public resultUpload:any;
   public msjerror;
@@ -20,40 +22,42 @@ export class AgregarTecComponent implements OnInit {
     private _Route:ActivatedRoute,
     private _router:Router
   ){
-    this.tecnologia = new Tecnologia(1,'','','','','');
+    this.tecnologia = new Tecnologia(1,'','','','','S');
     this.msjerror = "";
   }
 
   ngOnInit() {
+    this.getAllTipos();
+  }
 
+  getAllTipos(){
+    this._serviceTecnologia.allTipos().subscribe(
+      response=>{
+        this.tiposTec = response['tipos'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
   }
 
   //Metodo para agregar nueva tecnologia
-  agregarTecnologia(){
+  agregarTecnologia(form){
     if(this.fileToUpload && this.fileToUpload.length > 0){
-      this._serviceTecnologia.fileRequest(GLOBAL.url +'cargarImagen',[],this.fileToUpload).then(
-        (result)=>{ 
-          this.resultUpload = result;
-          this.tecnologia.imagen = this.resultUpload.filename;
-          this.tecnologia.activo = '1';
           this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
             respuesta=>{
-              console.log(respuesta);
-              if(respuesta['code'] == 200){
+              if(respuesta['ok']){
                 this._router.navigate(['/tecnologia']);
               }else{
                 this.msjerror = respuesta['message'];
+                form.reset();
               }
             },
             error=>{
               alert("Upss!! algo anda mal");
+              console.log(<any>error);
             }
           )
-        },
-        (error)=>{
-          alert("Upss !! Error al cargar la imagen ");
-        }
-      )
     }
 
   }
@@ -61,7 +65,15 @@ export class AgregarTecComponent implements OnInit {
   //Detecta cambios en la imagen
   fileChangeEvent(fileInput:any){
     this.fileToUpload =<Array<File>>fileInput.target.files
-    console.log(this.fileToUpload);
+
+    this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
+      response=>{
+        this.tecnologia.imagen = response['nombreimg'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
   }
 
 

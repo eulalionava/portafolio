@@ -11,6 +11,9 @@ import { AddproyectoComponent } from '../app/componentes/addproyecto/addproyecto
 import { CargarImgsComponent } from '../app/componentes/cargar-imgs/cargar-imgs.component';
 import { ExperienciaComponent } from '../app/componentes/experiencia/experiencia.component';
 import { EditexperienciaComponent } from '../app/componentes/editexperiencia/editexperiencia.component';
+import { AddadminComponent } from './componentes/addadmin/addadmin.component';
+import { AddexperienciaComponent } from './componentes/addexperiencia/addexperiencia.component';
+
 
 //Rutas
 const appRoutes:Routes = [
@@ -25,6 +28,8 @@ const appRoutes:Routes = [
     {path:'agregar-proyecto',component:AddproyectoComponent},
     {path:'editar-experiencia/:idExp',component:EditexperienciaComponent},
     {path:'cargar-imagenes/:idpro',component:CargarImgsComponent},
+    {path:'agregar-expeciencia',component:AddexperienciaComponent},
+    {path:'agregar-admin',component:AddadminComponent},
 
     {path:'**', component:InicioComponent}
   

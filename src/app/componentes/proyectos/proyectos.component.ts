@@ -29,8 +29,7 @@ export class ProyectosComponent implements OnInit {
   getProyectos(){
     this._serviceProyecto.getProyectos().subscribe(
       response=>{
-        this.imagenes = response['imagenes'];
-        this.proyectos = response['data'];
+        this.proyectos = response['proyectos'];
       },
       error=>{
         console.log(<any>error);
@@ -40,23 +39,25 @@ export class ProyectosComponent implements OnInit {
 
   //Funcion para borrar un proyecto
   borrarproyecto(idproyecto){
-    this._serviceProyecto.borrrarProyecto(idproyecto).subscribe(
-      response=>{
-        this.getProyectos();
-        console.log(response);
-      },
-      error=>{
-        console.log(<any>error);
-      }
-    )
+    if(confirm("¿ Desea continuar ?")){
+      this._serviceProyecto.borrrarProyecto(idproyecto).subscribe(
+        response=>{
+          this.getProyectos();
+          console.log(response);
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      )
+
+    }
   }
 
   editarproyecto(idproyecto){
     this._serviceProyecto.getProyecto(idproyecto).subscribe(
       response=>{
-
-        this.getproyecto = response['data'][0];
-        this.modelo.id = this.getproyecto['IDpro'];
+        this.getproyecto = response['proyecto'];
+        this.modelo.id = this.getproyecto['pro_id'];
         this.modelo.nombre = this.getproyecto['pro_nombre'];
         this.modelo.descripcion = this.getproyecto['pro_descripcion']
         console.log(response);
@@ -71,7 +72,7 @@ export class ProyectosComponent implements OnInit {
     this._serviceProyecto.editProyecto(this.modelo).subscribe(
       response=>{
         this.getProyectos();
-        console.log(response);
+        alert(response['message']);
       },
       error=>{
         console.log(<any>error);

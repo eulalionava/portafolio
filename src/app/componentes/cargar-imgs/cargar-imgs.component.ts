@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute,Params } from '@angular/router';
 import { ProyectoService } from '../../services/proyecto.service';
+import {UsuarioService} from '../../services/usuario.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-cargar-imgs',
   templateUrl: './cargar-imgs.component.html',
   styleUrls: ['./cargar-imgs.component.css'],
-  providers:[ProyectoService]
+  providers:[ProyectoService,UsuarioService]
 })
 export class CargarImgsComponent implements OnInit {
   public fileToUpload;
@@ -24,6 +25,7 @@ export class CargarImgsComponent implements OnInit {
     private _serviceProyecto:ProyectoService,
     private _route:ActivatedRoute,
     private _router:Router,
+    public _serviceUsuario:UsuarioService
   ) { }
 
   ngOnInit() {
@@ -35,9 +37,7 @@ export class CargarImgsComponent implements OnInit {
   getImagenes(){
     this._serviceProyecto.imagenesPorProyecto(this.idproyecto).subscribe(
       response=>{
-        this.imagenes = response['data'];
-        this.proyectos = response['proyecto'];
-        console.log(this.proyectos);
+        this.imagenes = response['imagenes'];
       },
       error=>{
         console.log(<any>error);
@@ -48,16 +48,12 @@ export class CargarImgsComponent implements OnInit {
   //METODO QUE CARGA IMAGNES A UN PROYECTO
   agregarImgs(){
     if(this.fileToUpload && this.fileToUpload.length > 0){
-      this._serviceProyecto.fileRequest(GLOBAL.url +'subirImgs',[],this.fileToUpload).then(
-        (result)=>{ 
-          console.log(result);
-          this.resultUpload = result;
-          this.imagen = this.resultUpload.filename;
-          this._serviceProyecto.addIMG(this.imagen,this.idproyecto).subscribe(
+          this._serviceProyecto.addIMG(this.fileToUpload,this.idproyecto).subscribe(
             respuesta=>{
               console.log(respuesta);
-              if(respuesta['code'] == 200){
+              if(respuesta['ok']){
                 this.success = true;
+                this.getImagenes();
               }else{
                 this.error = true;
               }
@@ -66,11 +62,6 @@ export class CargarImgsComponent implements OnInit {
               alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
             }
           )
-        },
-        (error)=>{
-          alert("Upss !! Error al cargar la imagen ");
-        }
-      )
     }
   }
 
@@ -79,7 +70,6 @@ export class CargarImgsComponent implements OnInit {
   //Detecta cambios en la imagen
   fileChangeEvent(fileInput:any){
     this.fileToUpload =<Array<File>>fileInput.target.files
-    console.log(this.fileToUpload);
   }
 
 }

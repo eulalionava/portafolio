@@ -16,50 +16,66 @@ export class TecnologiaService{
         this.url = GLOBAL.url;
     }
 
+    //LISTADO DE TIPOS DE TECNOLOGIA
+    allTipos(){
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.get(this.url + 'getTipos',{headers:headers});
+    }
+
+    //SUBIR IMAGEN
+    subirImage(files:Array<File>){
+        const formData = new FormData();
+
+        for(var i= 0; i < files.length; i++){
+            formData.append('imagen',files[i],files[i].name);
+        }
+
+        return this._http.put(this.url + 'subeIMG',formData);
+    }
+
     addTecnologia(tecnologia:Tecnologia){
-        let json = JSON.stringify(tecnologia);
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify({tecnologia:tecnologia});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
          
-        return this._http.post(this.url + 'addtecnologias',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.post(this.url + 'addtecnologia',params,{headers:headers});
     }
 
     //SEVICIO QUE OBTIENE UN LISTADO DE TODAS LAS TECNOLOGIAS
     listadoTec(){
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
-        return this._http.get(this.url + 'listado-tecnologia',{headers:headers})
-        .pipe(map(res=>res));
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.get(this.url + 'getTecnologias',{headers:headers});
     }
 
     //SERVICIO QUE ELIMINA UN REGISTRO
     eliminarTecnologia(idTecnologia){
-        let json = JSON.stringify({id:idTecnologia});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'cancelar-tecnologia',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.put(this.url + 'desactivartecnologia/'+idTecnologia+'',{headers:headers});
+        
     }
 
     //OBTIENE UNA TECNOLOGIA
     getTecnologia(idTecnologia){
-        let json = JSON.stringify({id:idTecnologia});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify({id:idTecnologia});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'getTecnologia',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.post(this.url + 'getTecnologia',params,{headers:headers});
     }
 
     //SERVICIO QUE EDITAR UNA TECNOLOGIA
     editartecnologia(datosTec){
-        let json = JSON.stringify({datos:datosTec});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify({datos:datosTec});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'editarTecnologia',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.put(this.url + 'editarTecnologia',params,{headers:headers});
 
     }
 

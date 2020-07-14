@@ -17,9 +17,10 @@ export class ExperienciaService{
     //Servicio que obtiene los registros de experiencia
     getExperiencia(){
 
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'trabajos',{headers:headers})
+        return this._http.get(this.url + 'getExperiencias',{headers:headers})
         .pipe(map(res=>res));
         
     }
@@ -39,5 +40,14 @@ export class ExperienciaService{
         let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
 
         return this._http.post(this.url + 'guardarCambios',params,{headers:headers}).pipe(map(res=>res));
+    }
+
+    addExperiencia(experiencia:Experiencia){
+        let params  = JSON.stringify({exp:experiencia});
+
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'addexperiencia',params,{headers:headers});
     }
 }

@@ -16,66 +16,61 @@ export class ProyectoService{
 
     //SERVICIO PARA AGREGAR UN NUEVO PROYECTO
     addProyecto(datos:Proyecto){
-        let json = JSON.stringify(datos);
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify(datos);
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'addProyecto',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.post(this.url + 'addProyecto',params,{headers:headers});
     }
 
-    addIMG(imagen,idproyecto){
-        let json = JSON.stringify({imagen:imagen,id:idproyecto});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+    addIMG(imagen:Array<File>,idproyecto){
+        const formData = new FormData();
 
-        return this._http.post(this.url + 'addImagenes',params,{headers:headers})
-        .pipe(map(res=>res));
+        for(var i= 0; i < imagen.length; i++){
+            formData.append('imagen',imagen[i],imagen[i].name);
+        }
+
+        formData.append('id',idproyecto);
+
+        return this._http.post(this.url + 'subeIMG',formData);
 
     }
     //SERVICIO QUE ONTIENE TODOS LOS PROYECTOS
     getProyectos(){
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
 
-        return this._http.get(this.url + 'getProyectos',{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.get(this.url + 'getProyectos',{headers:headers});
     }
 
     imagenesPorProyecto(idproyecto){
-        let json = JSON.stringify({proyecto:idproyecto});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'getImagenes',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.get(this.url + 'getImagenes/'+idproyecto+'',{headers:headers});
     }
 
     getProyecto(id){
-        let json = JSON.stringify({proyecto:id});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'getproyecto',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.get(this.url + 'getproyecto/'+id+'',{headers:headers});
     }
 
     editProyecto(datos:Proyecto){
 
-        let json = JSON.stringify({proyecto:datos});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify({proyecto:datos});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'editarproyecto',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.put(this.url + 'editarproyecto',params,{headers:headers});
     }
 
     borrrarProyecto(idProyecto){
-        let json = JSON.stringify({proyecto:idProyecto});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'borrarproyecto',params,{headers:headers})
-        .pipe(map(res=>res));
+        return this._http.put(this.url + 'borrarproyecto/'+idProyecto+'',{headers:headers});
     }
 
     //Servicio para subir imagen y agregar una nueva tenologia

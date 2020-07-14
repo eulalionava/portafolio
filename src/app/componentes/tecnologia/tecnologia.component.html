@@ -1,7 +1,7 @@
 <div class="row">
 
   <div class="col-md-6">
-    <h5>Lenguajes de programacion</h5>
+    <h5>Las tecnologias que he trabajado son:  </h5>
   </div>
   <div class="col-md-6">
     <a [routerLink]="['/agregar-tecnologia']" *ngIf="_serviceUsuario.Auth()">
@@ -13,19 +13,19 @@
   </div>
 
   <div class="w-100 mt-3"></div>
-    <div class="col-md-6" *ngFor="let tecnologia of tecnologias">
+    <div class="col-md-4" *ngFor="let tecnologia of tecnologias">
       <div class="card">
-        <img src="http://localhost:8080/appiPortafolio/uploads/{{tecnologia.tec_imagen}}" class="card-image-top img-fluid" alt="c#">
+        <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" class="card-image-top" alt="c#" height="150">
         <div class="card-body">
-          <h1 class="card-title">{{tecnologia.tec_nombre}}</h1>
+          <h3 class="card-title text-center">{{tecnologia.tec_nombre}}</h3>
           <p class="card-text">{{tecnologia.tec_descripcion}}</p>
           <div class="btn-group">
-            <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.IDtec)" *ngIf="_serviceUsuario.Auth()">
+            <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
               <span class="fa fa-trash"></span>
               Borrar
             </button>
-            <a href="#tec{{tecnologia.IDtec}}" role="button" class="btn btn-success btn-sm" data-toggle="modal" 
-            (click)="editar(tecnologia.IDtec)" *ngIf="_serviceUsuario.Auth()">
+            <a href="#tec{{tecnologia.tec_id}}" role="button" class="btn btn-success btn-sm" data-toggle="modal" 
+            (click)="editar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
               <span class="fa fa-edit"></span>
               Editar
             </a>
@@ -35,7 +35,7 @@
       <!-- INICIO DEL MODAL-->
 
       <!-- Modal -->
-      <div class="modal fade" id="tec{{tecnologia.IDtec}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="tec{{tecnologia.tec_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -46,22 +46,22 @@
             </div>
             <div class="modal-body">
               <div *ngIf="getTecnologia">
-                <img src="http://localhost:8080/appiPortafolio/uploads/{{getTecnologia['tec_imagen']}}" alt="Imagen" 
-                class="img-thumbnail mb-3" width="200" height="100">
+                <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" alt="Imagen" 
+                class="img-thumbnail mb-3" height="100">
                 <div class="form-group">
                   <input type="text" value="{{getTecnologia['tec_nombre']}}" class="form-control" 
                   name="nombre" [(ngModel)]="datos.nombre">
                 </div>
                 <div class="form-group">
                   <textarea name="descrip" class="form-control" [(ngModel)]="datos.descrip">
-                      {{getTecnologia['tec_descripcion']}}
+                      
                   </textarea>
                   </div>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getTecnologia['IDtec'])">Guardar Cambios</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getTecnologia['tec_id'])">Guardar Cambios</button>
             </div>
           </div>
         </div>

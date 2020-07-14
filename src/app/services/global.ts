@@ -1,4 +1,5 @@
 export var GLOBAL ={
-    url:'http://localhost:8080/appiPortafolio/index.php/',
+    // url:'http://localhost/appiPortafolio/index.php/',
+    url:'http://localhost:4000/',
     header_color:'#E03137'
 }

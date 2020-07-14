@@ -24,11 +24,20 @@ export class UsuarioService{
     }
     
     iniciarsesion(usuario,password){
-        let json = JSON.stringify({usuario:usuario,pass:password});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
+        let params = JSON.stringify({usuario:usuario,pass:password});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
 
-        return this._http.post(this.url + 'inicio',params,{headers:headers}).pipe(map(res=>res));
+        return this._http.post(this.url + 'login',params,{headers:headers});
+    }
+
+    //CREAR UN NUEVO USUARIO
+    nuevoUsuario(datos:any){
+        let params = JSON.stringify({datos:datos});
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'nuevousuario',params,{headers:headers}); 
     }
     
 }

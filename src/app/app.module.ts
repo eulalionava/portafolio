@@ -16,6 +16,8 @@ import { AgregarTecComponent } from './componentes/agregar-tec/agregar-tec.compo
 import { AddproyectoComponent } from './componentes/addproyecto/addproyecto.component';
 import { CargarImgsComponent } from './componentes/cargar-imgs/cargar-imgs.component';
 import { EditexperienciaComponent } from './componentes/editexperiencia/editexperiencia.component';
+import { AddadminComponent } from './componentes/addadmin/addadmin.component';
+import { AddexperienciaComponent } from './componentes/addexperiencia/addexperiencia.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { EditexperienciaComponent } from './componentes/editexperiencia/editexpe
     AgregarTecComponent,
     AddproyectoComponent,
     CargarImgsComponent,
-    EditexperienciaComponent
+    EditexperienciaComponent,
+    AddadminComponent,
+    AddexperienciaComponent
   ],
   imports: [
     BrowserModule,
