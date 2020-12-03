@@ -3,7 +3,9 @@ export class Proyecto{
         public id:number,
         public nombre:string,
         public descripcion:string,
-        public activo:string
+        public tecnologia:string,
+        public estrella:number,
+        public activo:number
     ){
         
     }

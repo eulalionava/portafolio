@@ -20,7 +20,7 @@ export class AddproyectoComponent implements OnInit {
     private _route:ActivatedRoute,
     private _router:Router
   ){
-    this.proyecto = new Proyecto(1,'','','S');
+    this.proyecto = new Proyecto(1,'','','1',1,1);
    }
 
   ngOnInit() {

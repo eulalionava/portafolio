@@ -24,6 +24,7 @@ export class UsuarioService{
     }
     
     iniciarsesion(usuario,password){
+        
         let params = JSON.stringify({usuario:usuario,pass:password});
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type','application/json');

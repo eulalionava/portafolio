@@ -19,7 +19,7 @@ export class ProyectosComponent implements OnInit {
     private _serviceProyecto:ProyectoService,
     public _serviceUsuario:UsuarioService
   ) { 
-    this.modelo = new Proyecto(1,'','','1');
+    this.modelo = new Proyecto(1,'','','1',1,1);
   }
 
   ngOnInit() {
@@ -29,6 +29,7 @@ export class ProyectosComponent implements OnInit {
   getProyectos(){
     this._serviceProyecto.getProyectos().subscribe(
       response=>{
+        console.log(response);
         this.proyectos = response['proyectos'];
       },
       error=>{

@@ -3,9 +3,11 @@ import { Router,ActivatedRoute,Params } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../modelos/usuario';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   providers:[UsuarioService]
 })
 export class LoginComponent implements OnInit {
@@ -22,8 +24,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.fallo = false;
-  }
+    
+    const sign_in_btn = document.querySelector("#sign-in-btn");
+    const sign_up_btn = document.querySelector("#sign-up-btn");
+    const container = document.querySelector(".container");
 
+    sign_up_btn.addEventListener("click", () => {
+      container.classList.add("sign-up-mode");
+    });
+
+    sign_in_btn.addEventListener("click", () => {
+      container.classList.remove("sign-up-mode");
+    });
+
+  }
+  //Inicio de sesion
   iniciar(){
     this._usuarioService.iniciarsesion(this.usuario.usuario,this.usuario.contrasena).subscribe(
       response=>{
@@ -39,6 +54,27 @@ export class LoginComponent implements OnInit {
         console.log(<any>error);
       }
     )
+  }
+
+  //Nuevo registro de usuario
+  nuevosRegistro(){
+
+    let clave = prompt("Digita la clave de administrador");
+
+    if(clave == "141993.ecn"){
+
+      this._usuarioService.nuevoUsuario(this.usuario).subscribe(
+        response=>{
+          
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      );
+
+    }else{
+      alert("Necesitas la clave de aministrador ,para realizar un registro");
+    }
   }
 
 }

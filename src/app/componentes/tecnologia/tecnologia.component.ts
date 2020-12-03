@@ -9,12 +9,14 @@ import {Tecnologia} from '../../modelos/tecnologia';
 @Component({
   selector: 'app-tecnologia',
   templateUrl: './tecnologia.component.html',
+  styleUrls:['./tecnologia.component.css'],
   providers:[TecnologiaService,UsuarioService]
 })
 export class TecnologiaComponent implements OnInit {
   public tecnologias:any;
   public getTecnologia:any;
   public tecnologia:Tecnologia;
+  public mitoken:any;
 
   public datos = {
     'id':1,
@@ -30,10 +32,12 @@ export class TecnologiaComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) { 
     //INSTANCIIA EL MODELO
-    this.tecnologia = new Tecnologia(1,'','','','','');
+    this.tecnologia = new Tecnologia(1,'','','','',1);
   }
 
   ngOnInit() {
+    this.mitoken = JSON.parse( localStorage.getItem('admin'));
+
     this.listaTecnologias();
     this.cd.detectChanges();
   }
@@ -62,7 +66,7 @@ export class TecnologiaComponent implements OnInit {
   //ELIMINAR UNA TECNOLOGIA
   borrar(idTec){
     if(confirm("¿ La imagen se borrara,desea proseguir ?")){
-      this._serviceTecnologia.eliminarTecnologia(idTec).subscribe(
+      this._serviceTecnologia.eliminarTecnologia(idTec,this.mitoken['token']).subscribe(
         response=>{
           console.log(response);
           if(response['ok']){

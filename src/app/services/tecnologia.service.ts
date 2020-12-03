@@ -9,7 +9,7 @@ import { Tecnologia } from '../modelos/tecnologia';
 @Injectable()
 
 export class TecnologiaService{
-
+    
     public url:string;
 
     constructor(public _http:HttpClient){
@@ -27,7 +27,7 @@ export class TecnologiaService{
     //SUBIR IMAGEN
     subirImage(files:Array<File>){
         const formData = new FormData();
-
+        
         for(var i= 0; i < files.length; i++){
             formData.append('imagen',files[i],files[i].name);
         }
@@ -36,9 +36,13 @@ export class TecnologiaService{
     }
 
     addTecnologia(tecnologia:Tecnologia){
-        let params = JSON.stringify({tecnologia:tecnologia});
+        let mitoken = JSON.parse( localStorage.getItem('admin'));
+
+        let params  = JSON.stringify({tecnologia:tecnologia});
         let headers = new HttpHeaders();
-        headers = headers.set('Content-Type','application/json');
+
+        headers     = headers.set('Content-Type','application/json');
+        headers     = headers.set('token',mitoken.token);
          
         return this._http.post(this.url + 'addtecnologia',params,{headers:headers});
     }
@@ -46,17 +50,19 @@ export class TecnologiaService{
     //SEVICIO QUE OBTIENE UN LISTADO DE TODAS LAS TECNOLOGIAS
     listadoTec(){
         let headers = new HttpHeaders();
-        headers = headers.set('Content-Type','application/json');
+        headers     = headers.set('Content-Type','application/json');
 
         return this._http.get(this.url + 'getTecnologias',{headers:headers});
     }
 
     //SERVICIO QUE ELIMINA UN REGISTRO
-    eliminarTecnologia(idTecnologia){
-        let headers = new HttpHeaders();
-        headers=headers.set('Content-Type','application/json');
+    eliminarTecnologia(idTecnologia,token){
 
-        return this._http.put(this.url + 'desactivartecnologia/'+idTecnologia+'',{headers:headers});
+        let headers = new HttpHeaders();
+        headers     = headers.set('Content-Type','application/json');
+        headers     = headers.set('token',token);
+
+        return this._http.post(this.url + 'desactivartecnologia/'+idTecnologia+'',{headers:headers});
         
     }
 

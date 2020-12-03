@@ -3,9 +3,9 @@ export class Tecnologia{
         public id:number,
         public nombre:string,
         public descripcion:string,
-        public imagen:string,
         public tipo:string,
-        public activo:string
+        public imagen:string,
+        public activo:number
     ){
 
     }

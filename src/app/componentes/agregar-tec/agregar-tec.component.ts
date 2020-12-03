@@ -3,7 +3,7 @@ import { Tecnologia } from '../../modelos/tecnologia';
 import { Router,ActivatedRoute,Params } from '@angular/router';
 import { GLOBAL } from '../../services/global';
 import { TecnologiaService } from '../../services/tecnologia.service';
-import { error } from 'protractor';
+
 
 @Component({
   selector: 'app-agregar-tec',
@@ -22,11 +22,12 @@ export class AgregarTecComponent implements OnInit {
     private _Route:ActivatedRoute,
     private _router:Router
   ){
-    this.tecnologia = new Tecnologia(1,'','','','','S');
+    this.tecnologia = new Tecnologia(1,'','','','',1);
     this.msjerror = "";
   }
 
   ngOnInit() {
+    const mitoken = JSON.parse( localStorage.getItem('admin'));
     this.getAllTipos();
   }
 
@@ -44,8 +45,10 @@ export class AgregarTecComponent implements OnInit {
   //Metodo para agregar nueva tecnologia
   agregarTecnologia(form){
     if(this.fileToUpload && this.fileToUpload.length > 0){
+        console.log(this.tecnologia);
           this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
             respuesta=>{
+              console.log(respuesta);
               if(respuesta['ok']){
                 this._router.navigate(['/tecnologia']);
               }else{
@@ -64,8 +67,7 @@ export class AgregarTecComponent implements OnInit {
 
   //Detecta cambios en la imagen
   fileChangeEvent(fileInput:any){
-    this.fileToUpload =<Array<File>>fileInput.target.files
-
+    this.fileToUpload =<Array<File>>fileInput.target.files;
     this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
       response=>{
         this.tecnologia.imagen = response['nombreimg'];

@@ -10,75 +10,56 @@
   </div>
   
   <div class="w-100"></div>
-    <div class="col-md-12">
-      <div class="card bg-default">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-md-4" *ngFor="let proyecto of proyectos; let j=index">
 
-              <div class="card">
-                <a [routerLink]="['/cargar-imagenes',proyecto.pro_id]">
-                  <div class="card-header" style="background: #d0c9c9;">
-                    <p class="card-title text-white">
-                      <strong>{{proyecto.pro_nombre}}</strong>
-                      <a class="btn btn-secondary btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.pro_id]"
-                      *ngIf="_serviceUsuario.Auth()" >
-                        <i class="fas fa-upload"></i>
-                      </a>
-                    </p>
-                  </div>
-                </a>
-                <div class="card-body">
-                    {{proyecto.pro_descripcion}}
-                </div>
-                <div class="card-footer" *ngIf="_serviceUsuario.Auth()">
-                  <div class="btn-group">
-                    <a role="button" class="btn btn-danger btn-sm" (click)="borrarproyecto(proyecto.pro_id)">
-                      <span class="fa fa-trash"></span>
-                      Borrar
-                    </a>
-                    <a href="#proyecto{{proyecto.pro_id}}" role="button"
-                    class="btn btn-primary btn-sm" data-toggle="modal" (click)="editarproyecto(proyecto.pro_id)">
-                      <span class="fa fa-edit"></span>
-                      Editar
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body" *ngFor="let proyecto of proyectos">
+
+        <div class="card">
+          <div class="card body" style="padding: 1rem;">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="card card-imagen">
+                  <div class="card-body">
+                    <a href="#">
+                      <img src="../../../assets/proyecto/proyecto.png" class="card-img-top" alt="imagen">
                     </a>
                   </div>
                 </div>
               </div>
-              <!-- Modal -->
-              <div class="modal fade" id="proyecto{{proyecto.pro_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar proyecto</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body" *ngIf="getproyecto">
-                        <div class="form-group">
-                          <input type="text" value="{{getproyecto['pro_nombre']}}" name="nombre" 
-                          class="form-control" [(ngModel)]="modelo.nombre">
-                        </div>
-                        <div class="form-group">
-                          <textarea name="descripcion" class="form-control" [(ngModel)]="modelo.descripcion" >
-                            {{getproyecto['pro_descripcion']}}
-                          </textarea>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getproyecto['pro_id'])">Guardar Cambios</button>
-                      </div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h4 class="d-flex mt-4">{{proyecto.pro_nombre}}</h4>
+                    <p>{{proyecto.pro_descripcion}}</p>
+                    <p>
+                      <i class="fas fa-star"></i>
+                    </p>
+                    <p>proyecto personal</p>
+                    <div class="d-flex justify-content-start">
+                        <div class="col-md-6 botones">Autor</div>
+                        <div class="col-md-6 botones">Eulalio cruz nava</div>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                      <button class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                      <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                      <a class="btn btn-danger btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.pro_id]"
+                      *ngIf="_serviceUsuario.Auth()" title="Cargar imagenes">
+                        <i class="fas fa-upload"></i>
+                      </a>
                     </div>
                   </div>
                 </div>
-                <!--FIN DEL MODAL -->
+              </div>
             </div>
           </div>
-          
         </div>
+
       </div>
     </div>
-  
+  </div>
 </div>
