@@ -29,7 +29,6 @@ export class ProyectosComponent implements OnInit {
   getProyectos(){
     this._serviceProyecto.getProyectos().subscribe(
       response=>{
-        console.log(response);
         this.proyectos = response['proyectos'];
       },
       error=>{

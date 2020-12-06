@@ -23,7 +23,7 @@ export class EditexperienciaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.experiencia = new Experiencia(1,'','','','','','','');
+    this.experiencia = new Experiencia(1,'','','','','','','','','',0,1);
     this.idexp = parseInt( this._route.snapshot.paramMap.get('idExp'));
     this.getexperiencia();
   }

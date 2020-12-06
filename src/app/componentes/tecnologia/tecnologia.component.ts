@@ -49,7 +49,6 @@ export class TecnologiaComponent implements OnInit {
   listaTecnologias(){
     this._serviceTecnologia.listadoTec().subscribe(
       response=>{
-        console.log(response);
         if(response['ok']){
           this.tecnologias = response['tecnologias'];
         }else{

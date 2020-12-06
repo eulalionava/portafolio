@@ -16,7 +16,7 @@ export class AddexperienciaComponent implements OnInit {
     private _servicexperiencia:ExperienciaService,
     private _router:Router
   ) {
-    this.exp = new Experiencia(1,'','','','','','','S');
+    this.exp = new Experiencia(1,'','','','','','','','','',0,1);
    }
 
   ngOnInit() {
