@@ -7,48 +7,44 @@
           <button type="button" class="btn btn-outline-secondary text-white">Nueva Experiencia</button>
         </a>
       </div>
-      <div class="card-body">
+      <div class="card-body" *ngFor="let trabajo of trabajos">
         <div class="card">
           <div class="card-body card_principal">
-
             <div class="row">
+
               <div class="col-md-4">
                 <div class="card">
                   <div class="card-body">
                     <div class="row">
-                      <div class="duracion">4</div>
+                      <div class="duracion">{{trabajo.exp_duracion}}</div>
                       <div class="w-100"></div>
                       <div class="col-md-12 d-flex mb-3 mt-3 cargo" >
-                        <h5>programador junior</h5>  
+                        <h5>{{trabajo.exp_cargo}}</h5>  
                       </div>
                       <div class="col-md-12" >
-                        <p>Cuidad de mexico</p>  
+                        <p>{{trabajo.exp_direccion}}</p>  
                       </div>
 
                       <div class="col-md-6">
-                        <div>12 de enero 2000</div> 
+                        <div>{{trabajo.exp_inicio}}</div> 
                       </div>
                       <div class="col-md-6" >
-                        <div>12 de enero 2000</div> 
+                        <div>{{trabajo.exp_fin}}</div> 
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div class="col-md-4 card_actividades">
                 <span class="badge badge-secondary">Actividades</span> 
                 <div>
-                  <p class="text-white">mantenimienot</p>
-                  <p>programacion</p>
-                  <p>Levantamiento de requerimientos</p>
+                  <p class="text-white">{{trabajo.exp_actividades}}</p>
                 </div>  
               </div>
-
               <div class="col-md-4 card_actividades">
                   <span class="badge badge-primary">Tecnologias</span>
                   <div>
-                    <p>php,css,html,javascript</p>
+                    <p class="text-white">{{trabajo.exp_tecnologias}}</p>
                   </div>  
               </div>
 
