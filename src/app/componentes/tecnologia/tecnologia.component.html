@@ -4,8 +4,8 @@
     <h5>Las tecnologias que he trabajado son:  </h5>
   </div>
   <div class="col-md-6">
-    <a [routerLink]="['/agregar-tecnologia']" *ngIf="_serviceUsuario.Auth()">
-      <button type="button" class="btn btn-primary btn-sm float-right">
+    <a *ngIf="_serviceUsuario.Auth()">
+      <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalNuevo" >
         <span class="fa fa-plus"></span>
         Agregar
       </button>
@@ -107,13 +107,40 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header" style="background-color: #201c38;">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Editar Tecnologia</h5>
+                <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Tecnologia</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                
+                <form #formAgregar="ngForm">
+                  <div class="form-group">
+                    <div class="alert alert-danger" *ngIf="msj_error">{{msjerror}}</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="tecnologia.nombre"
+                     class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="descripcion">Descripcion:</label>
+                    <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="tecnologia.descripcion"
+                     class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="tipo">Tipo Tecnologia:</label>
+                    <select name="tipo" id="" class="form-control" #tipo="ngModel" [(ngModel)]="tecnologia.tipo">
+                      <option *ngFor="let tipo of tipos_tecnologia" value="{{tipo.tipo_id}}">{{tipo.tipo_nombre}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="imagen">Seleccionar imagen:</label>
+                    <input type="file" name="imagen"
+                     (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
+                  </div>
+                  <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
+                  [disabled]="!formAgregar.form.valid">
+                </form>
               </div>
             </div>
           </div>

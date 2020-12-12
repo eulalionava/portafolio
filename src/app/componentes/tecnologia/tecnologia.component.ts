@@ -15,8 +15,11 @@ import {Tecnologia} from '../../modelos/tecnologia';
 export class TecnologiaComponent implements OnInit {
   public tecnologias:any;
   public getTecnologia:any;
+  public tipos_tecnologia:any;
+  public fileToUpload:any;
   public tecnologia:Tecnologia;
   public mitoken:any;
+  public msj_error:boolean;
 
   public datos = {
     'id':1,
@@ -33,12 +36,14 @@ export class TecnologiaComponent implements OnInit {
   ) { 
     //INSTANCIIA EL MODELO
     this.tecnologia = new Tecnologia(1,'','','','',1);
+    this.msj_error = false
   }
 
   ngOnInit() {
     this.mitoken = JSON.parse( localStorage.getItem('admin'));
 
     this.listaTecnologias();
+    this.getAllTipos();
     this.cd.detectChanges();
   }
   
@@ -49,6 +54,7 @@ export class TecnologiaComponent implements OnInit {
   listaTecnologias(){
     this._serviceTecnologia.listadoTec().subscribe(
       response=>{
+        console.log(response);
         if(response['ok']){
           this.tecnologias = response['tecnologias'];
         }else{
@@ -58,6 +64,18 @@ export class TecnologiaComponent implements OnInit {
       },
       error=>{
         console.log(error);
+      }
+    )
+  }
+
+  //LISTADO DE TIPOS DE TECNOLOGIA
+  getAllTipos(){
+    this._serviceTecnologia.allTipos().subscribe(
+      response=>{
+        this.tipos_tecnologia = response['tipos'];
+      },
+      error=>{
+        console.log(<any>error);
       }
     )
   }
@@ -98,9 +116,31 @@ export class TecnologiaComponent implements OnInit {
     )
   }
 
+  //Metodo para agregar nueva tecnologia
+  agregarTecnologia(form){
+    if(this.fileToUpload && this.fileToUpload.length > 0){
+        console.log(this.tecnologia);
+          this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
+            respuesta=>{
+              console.log(respuesta);
+              if(respuesta['ok']){
+                this.listaTecnologias();
+              }else{
+                this.msj_error = respuesta['message'];
+                form.reset();
+              }
+            },
+            error=>{
+              alert("Upss!! algo anda mal");
+              console.log(<any>error);
+            }
+          )
+    }
+
+  }
+
   //GUARDAR CAMBIOS
   guardarCambios(idTec){
-
     this.datos.id = idTec;
     this._serviceTecnologia.editartecnologia(this.datos).subscribe(
       response=>{
@@ -113,4 +153,15 @@ export class TecnologiaComponent implements OnInit {
     )
   }
 
+  fileChangeEvent(fileInput:any){
+    this.fileToUpload =<Array<File>>fileInput.target.files;
+    this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
+      response=>{
+        this.tecnologia.imagen = response['nombreimg'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
+  }
 }
