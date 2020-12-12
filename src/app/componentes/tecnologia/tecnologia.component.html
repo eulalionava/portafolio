@@ -26,7 +26,12 @@
 
                   <div class="row">
                     <div class="col-md-2 d-flex justify-content-center align-items-center corazon">
-                      <i class="fa fa-heart 5x"></i>
+                      <button class="btn btn-outline-secondary" *ngIf="_serviceUsuario.Auth(); else elseBlock">
+                        <i class="fa fa-upload 7x">
+                          <input type="file" name="" class="_file" title="Cambiar foto">
+                        </i>
+                      </button>
+                      <ng-template #elseBlock><i class="fa fa-upload 5x"></i></ng-template>
                     </div>
                     <div class="col-md-2 d-flex mt-2">
                       <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" class="rounded" alt="c#" height="100">
@@ -66,8 +71,8 @@
           <div class="modal fade" id="tec{{tecnologia.tec_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Editar Tecnologia</h5>
+                <div class="modal-header" style="background-color: #201c38;">
+                  <h5 class="modal-title text-white" id="exampleModalLabel">Editar Tecnologia</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -96,6 +101,24 @@
           </div>
           <!--FIN DEL MODAL -->
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #201c38;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">Editar Tecnologia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--FIN DEL MODAL -->
         
       </div>
     </div>
