@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <h5>Proyectos laborales y personales</h5>
-    <a [routerLink]="['/agregar-proyecto']" *ngIf="_serviceUsuario.Auth()">
-      <button class="btn btn-success btn-sm float-right mb-1">
+    <a *ngIf="_serviceUsuario.Auth()">
+      <button class="btn btn-success btn-sm float-right mb-1" data-toggle="modal" data-target="#modalNuevo">
         <span class="fa fa-plus"></span>
         Proyecto
       </button>
@@ -60,6 +60,55 @@
         </div>
 
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #201c38;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Tecnologia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #formAgregar="ngForm">
+                <div class="form-group">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="modelo.nombre"
+                   class="form-control" placeholder="Nombre proyecto" required>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripcion:</label>
+                  <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion"
+                   class="form-control" placeholder="Descripcion de proyecto" required>
+                </div>
+                <label for="">Tecnologias:</label>
+                <div class="form-group" *ngFor="let tecnologia of lista_tecnologias">
+                  <div class="col-md-12 col-sm-12" style="font-family: 'Font Awesome 5 Pro';">
+                    <input type="checkbox" name="php" value="{{tecnologia.tec_id}}" (change)="onChange($event)">
+                     {{tecnologia.tec_nombre}}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tipo">Estrellas:</label>
+                  <select name="tipo" id="" class="form-control" #tipo="ngModel" [(ngModel)]="modelo.estrella">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <input type="button" class="btn btn-primary" (click)="agregarProyecto()" value="Agregar" data-dismiss="modal"
+                [disabled]="!formAgregar.form.valid">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL -->
+
     </div>
   </div>
 </div>
