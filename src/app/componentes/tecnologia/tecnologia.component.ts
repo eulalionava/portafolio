@@ -54,7 +54,6 @@ export class TecnologiaComponent implements OnInit {
   listaTecnologias(){
     this._serviceTecnologia.listadoTec().subscribe(
       response=>{
-        console.log(response);
         if(response['ok']){
           this.tecnologias = response['tecnologias'];
         }else{
@@ -158,6 +157,19 @@ export class TecnologiaComponent implements OnInit {
     this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
       response=>{
         this.tecnologia.imagen = response['nombreimg'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
+  }
+
+  changeImage(fileInput:any,imagen,id){
+    this.fileToUpload =<Array<File>>fileInput.target.files;
+    this._serviceTecnologia.changeImg(this.fileToUpload,imagen,id).subscribe(
+      response=>{
+        console.log(response);
+        this.listaTecnologias();
       },
       error=>{
         console.log(<any>error);

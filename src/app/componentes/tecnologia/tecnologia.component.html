@@ -28,7 +28,7 @@
                     <div class="col-md-2 d-flex justify-content-center align-items-center corazon">
                       <button class="btn btn-outline-secondary" *ngIf="_serviceUsuario.Auth(); else elseBlock">
                         <i class="fa fa-upload 7x">
-                          <input type="file" name="" class="_file" title="Cambiar foto">
+                          <input type="file" name="" class="_file" title="Cambiar foto" (change)="changeImage($event,tecnologia.tec_imagen,tecnologia.tec_id)">
                         </i>
                       </button>
                       <ng-template #elseBlock><i class="fa fa-upload 5x"></i></ng-template>

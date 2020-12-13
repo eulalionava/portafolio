@@ -35,6 +35,19 @@ export class TecnologiaService{
         return this._http.put(this.url + 'subeIMG',formData);
     }
 
+    changeImg(files:Array<File>,imagen,id){
+
+        const formData = new FormData();
+        
+        for(var i= 0; i < files.length; i++){
+            formData.append('imagen',files[i],files[i].name);
+            formData.append('imgOld',imagen);
+            formData.append('id',id);
+        }
+
+        return this._http.put(this.url + 'changeIMG',formData);
+    }
+
     addTecnologia(tecnologia:Tecnologia){
         let mitoken = JSON.parse( localStorage.getItem('admin'));
 
