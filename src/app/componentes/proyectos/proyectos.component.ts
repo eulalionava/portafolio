@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ProyectoService } from '../../services/proyecto.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { TecnologiaService } from "../../services/tecnologia.service";
@@ -31,6 +31,8 @@ export class ProyectosComponent implements OnInit {
   ngOnInit() {
     this.getProyectos();
     this.getListaTecnologias();
+
+    
   }
 
   //LISTADO DE TODOS LOS PROYECTOS
@@ -74,19 +76,19 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
-  editarproyecto(idproyecto){
-    this._serviceProyecto.getProyecto(idproyecto).subscribe(
-      response=>{
-        this.getproyecto = response['proyecto'];
-        this.modelo.id = this.getproyecto['pro_id'];
-        this.modelo.nombre = this.getproyecto['pro_nombre'];
-        this.modelo.descripcion = this.getproyecto['pro_descripcion']
-        console.log(response);
-      },
-      error=>{
-        console.log(<any>error);
-      }
-    );
+  editarProyecto(idproyecto){
+    // this._serviceProyecto.getProyecto(idproyecto).subscribe(
+    //   response=>{
+    //     this.getproyecto = response['proyecto'];
+    //     this.modelo.id = this.getproyecto['pro_id'];
+    //     this.modelo.nombre = this.getproyecto['pro_nombre'];
+    //     this.modelo.descripcion = this.getproyecto['pro_descripcion']
+    //     console.log(response);
+    //   },
+    //   error=>{
+    //     console.log(<any>error);
+    //   }
+    // );
   }
 
   guardarCambios(idproyecto){
@@ -127,10 +129,10 @@ export class ProyectosComponent implements OnInit {
   }
 
   //AGREGAR UN NUEVO PROYECTO
-  agregarProyecto(){
+  agregarProyecto(form){
     this._serviceProyecto.addProyecto(this.modelo).subscribe(
       response=>{
-        console.log(response);
+        form.clean();
         this.getProyectos();
       },
       error=>{
@@ -139,5 +141,20 @@ export class ProyectosComponent implements OnInit {
       }
     )
   }
+
+  //EIMINAR UN PROYECTO
+  eliminar_proyecto(id_proyecto){
+    if(confirm("Desea eliminar este proyecto")){
+      this._serviceProyecto.borrrarProyecto(id_proyecto).subscribe(
+        response=>{
+          this.getProyectos();
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      );
+    }
+  }
+
 
 }
