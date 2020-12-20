@@ -23,7 +23,8 @@ export class ProyectoService{
         return this._http.post(this.url + 'addProyecto',params,{headers:headers});
     }
 
-    addIMG(imagen:Array<File>,idproyecto){
+    add_imagenes(imagen:Array<File>,idproyecto){
+        
         const formData = new FormData();
 
         for(var i= 0; i < imagen.length; i++){
@@ -35,6 +36,7 @@ export class ProyectoService{
         return this._http.post(this.url + 'subeIMG',formData);
 
     }
+
     //SERVICIO QUE ONTIENE TODOS LOS PROYECTOS
     getProyectos(){
         let headers = new HttpHeaders();

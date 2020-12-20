@@ -37,7 +37,8 @@ export class CargarImgsComponent implements OnInit {
   getImagenes(){
     this._serviceProyecto.imagenesPorProyecto(this.idproyecto).subscribe(
       response=>{
-        this.imagenes = response['imagenes'];
+        // this.imagenes = response['imagenes'];
+        console.log(response);
       },
       error=>{
         console.log(<any>error);
@@ -45,31 +46,9 @@ export class CargarImgsComponent implements OnInit {
     )
   }
 
-  //METODO QUE CARGA IMAGNES A UN PROYECTO
-  agregarImgs(){
-    if(this.fileToUpload && this.fileToUpload.length > 0){
-          this._serviceProyecto.addIMG(this.fileToUpload,this.idproyecto).subscribe(
-            respuesta=>{
-              console.log(respuesta);
-              if(respuesta['ok']){
-                this.success = true;
-                this.getImagenes();
-              }else{
-                this.error = true;
-              }
-            },
-            error=>{
-              alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
-            }
-          )
-    }
-  }
-
-  
-
   //Detecta cambios en la imagen
   fileChangeEvent(fileInput:any){
-    this.fileToUpload =<Array<File>>fileInput.target.files
+    this.fileToUpload = <Array<File>>fileInput.target.files
   }
 
 }

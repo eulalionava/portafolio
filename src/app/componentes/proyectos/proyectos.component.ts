@@ -3,6 +3,7 @@ import { ProyectoService } from '../../services/proyecto.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { TecnologiaService } from "../../services/tecnologia.service";
 
+
 import { Proyecto } from '../../modelos/proyecto';
 import { error } from 'protractor';
 
@@ -13,12 +14,14 @@ import { error } from 'protractor';
   providers:[ProyectoService,UsuarioService,TecnologiaService]
 })
 export class ProyectosComponent implements OnInit {
+
   public modelo:Proyecto;
   public getproyecto:any;
   public imagenes = [];
   public proyectos = [];
   public lista_tecnologias:any;
   public lista_checks = [];
+  public fileToUpload:any;
 
   constructor(
     private _serviceProyecto:ProyectoService,
@@ -153,6 +156,29 @@ export class ProyectosComponent implements OnInit {
           console.log(<any>error);
         }
       );
+    }
+  }
+
+  //Detecta cambios en la imagen
+  fileChangeEvent(fileInput:any){
+    this.fileToUpload =<Array<File>>fileInput.target.files
+    console.log(this.fileToUpload);
+  }
+
+  //METODO QUE CARGA IMAGNES A UN PROYECTO
+  cargar_imagenes(id){
+    if(this.fileToUpload && this.fileToUpload.length > 0){
+          this._serviceProyecto.add_imagenes(this.fileToUpload,id).subscribe(
+            respuesta=>{
+              if(respuesta['ok']){
+                this.getProyectos();
+                alert(respuesta['message']);
+              }
+            },
+            error=>{
+              alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
+            }
+          )
     }
   }
 
