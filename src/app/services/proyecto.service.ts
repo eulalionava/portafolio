@@ -74,6 +74,14 @@ export class ProyectoService{
 
         return this._http.put(this.url + 'borrarproyecto/'+idProyecto+'',{headers:headers});
     }
+    get_all_images(id_proyecto){
+
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.get(this.url + 'getAllImagenes/'+id_proyecto+'',{headers:headers});
+
+    }
 
     //Servicio para subir imagen y agregar una nueva tenologia
     fileRequest(url:string,params:Array<string>,files:Array<File>){

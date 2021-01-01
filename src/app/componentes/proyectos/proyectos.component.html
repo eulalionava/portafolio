@@ -21,7 +21,7 @@
               <div class="col-md-3">
                 <div class="card card-imagen">
                   <div class="card-body">
-                    <a href="#">
+                    <a [routerLink]="['/imagenes',proyecto.pro_id]">
                       <img src="../../../assets/proyecto/proyecto.png" class="card-img-top" alt="imagen">
                     </a>
                   </div>
@@ -35,20 +35,24 @@
                     <p>
                       <i class="fas fa-star"></i>
                     </p>
-                    <p>proyecto personal</p>
+                    <p>{{proyecto.pro_tipo}}</p>
                     <div class="d-flex justify-content-start">
                         <div class="col-md-6 botones">Autor</div>
                         <div class="col-md-6 botones">Eulalio cruz nava</div>
                     </div>
                     <div class="d-flex justify-content-start">
-                      <a [routerLink]="['/editar-proyecto',proyecto.pro_id]">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal"><i class="fa fa-edit"></i></button>
+                      <a [routerLink]="['/editar-proyecto',proyecto.pro_id]" *ngIf="_serviceUsuario.Auth()">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+                          <i class="fa fa-edit"></i>
+                        </button>
                       </a>
-                      <button class="btn btn-danger" (click)="eliminar_proyecto(proyecto.pro_id)"><i class="fa fa-trash"></i></button>
+                      <button class="btn btn-danger" (click)="eliminar_proyecto(proyecto.pro_id)" *ngIf="_serviceUsuario.Auth()">
+                        <i class="fa fa-trash"></i>
+                      </button>
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div>
+                    <div *ngIf="_serviceUsuario.Auth()">
                       <button class="btn btn-success btn-sm float-right mb-1" data-toggle="modal" data-target="#modalUpload">
                         <i class="fas fa-upload"></i>
                       </button>
@@ -117,12 +121,19 @@
                 </div>
                 <div class="form-group">
                   <label for="tipo">Estrellas:</label>
-                  <select name="tipo" id="" class="form-control" #tipo="ngModel" [(ngModel)]="modelo.estrella">
+                  <select name="tipo" class="form-control" #tipo="ngModel" [(ngModel)]="modelo.estrella">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="tipoproyecto">Tipo proyecto</label>
+                  <select name="tipoproyecto" class="form-control" #tipoproyecto="ngModel" [(ngModel)]="modelo.tipo">
+                    <option value="Laboral">Laboral</option>
+                    <option value="Personal">Personal</option>
                   </select>
                 </div>
                 <input type="button" class="btn btn-primary" (click)="agregarProyecto(formAgregar)" value="Agregar" data-dismiss="modal"

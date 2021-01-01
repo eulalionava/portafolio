@@ -6,12 +6,11 @@ import { InicioComponent } from '../app/componentes/inicio/inicio.component';
 import { TecnologiaComponent } from '../app/componentes/tecnologia/tecnologia.component';
 import { ProyectosComponent } from '../app/componentes/proyectos/proyectos.component';
 import { LoginComponent } from '../app/componentes/login/login.component';
-import { CargarImgsComponent } from '../app/componentes/cargar-imgs/cargar-imgs.component';
 import { ExperienciaComponent } from '../app/componentes/experiencia/experiencia.component';
 import { EditexperienciaComponent } from '../app/componentes/editexperiencia/editexperiencia.component';
 import { AddadminComponent } from './componentes/addadmin/addadmin.component';
-import { AddexperienciaComponent } from './componentes/addexperiencia/addexperiencia.component';
 import { EditarProyectoComponent } from './componentes/editar-proyecto/editar-proyecto.component';
+import { ImagenesComponent } from './componentes/imagenes/imagenes.component';
 
 
 //Rutas
@@ -23,9 +22,8 @@ const appRoutes:Routes = [
     {path:'tecnologia',component:TecnologiaComponent},
     {path:'proyectos',component:ProyectosComponent},
     {path:'experiencia',component:ExperienciaComponent},
+    {path:'imagenes/:id',component:ImagenesComponent},
     {path:'editar-experiencia/:idExp',component:EditexperienciaComponent},
-    {path:'cargar-imagenes/:idpro',component:CargarImgsComponent},
-    {path:'agregar-expeciencia',component:AddexperienciaComponent},
     {path:'editar-proyecto/:id',component:EditarProyectoComponent},
     {path:'agregar-admin',component:AddadminComponent},
 

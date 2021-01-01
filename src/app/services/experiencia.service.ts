@@ -26,20 +26,18 @@ export class ExperienciaService{
     }
 
     getExpPorId(idexp){
-        let json = JSON.stringify({idexp:idexp});
-        let params = 'json='+json;
         let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
-
-        return this._http.post(this.url + 'getExpID',params,{headers:headers}).pipe(map(res=>res));
+        return this._http.get(this.url + 'getExpID/'+idexp,{headers:headers}).pipe(map(res=>res));
 
     }
 
     editExperience(expeciencia:Experiencia){
-        let json = JSON.stringify({expe:expeciencia});
-        let params = 'json='+json;
-        let headers = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded'});
 
-        return this._http.post(this.url + 'guardarCambios',params,{headers:headers}).pipe(map(res=>res));
+        let params = JSON.stringify(expeciencia);
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'guardarCambios',params,{headers:headers});
     }
 
     addExperiencia(experiencia:Experiencia){
@@ -49,5 +47,13 @@ export class ExperienciaService{
         headers=headers.set('Content-Type','application/json');
 
         return this._http.post(this.url + 'addexperiencia',params,{headers:headers});
+    }
+
+    eliminar_experiencia(id_experiencia){
+
+        let headers = new HttpHeaders();
+        headers=headers.set('Content-Type','application/json');
+
+        return this._http.put(this.url + 'borrarExperiencia/'+id_experiencia,{headers:headers});
     }
 }

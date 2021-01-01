@@ -24,7 +24,7 @@ export class EditarProyectoComponent implements OnInit {
     private _serviceProyecto:ProyectoService,
     private _serviceTecnologia:TecnologiaService
   ) { 
-    this.modelo = new Proyecto(1,'','','',1,1); 
+    this.modelo = new Proyecto(1,'','','',1,'',1); 
   }
 
   ngOnInit() {

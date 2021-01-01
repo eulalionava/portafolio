@@ -84,7 +84,6 @@ export class TecnologiaComponent implements OnInit {
     if(confirm("¿ La imagen se borrara,desea proseguir ?")){
       this._serviceTecnologia.eliminarTecnologia(idTec,this.mitoken['token']).subscribe(
         response=>{
-          console.log(response);
           if(response['ok']){
             this.listaTecnologias();
             this._router.navigate(['/tecnologia']);

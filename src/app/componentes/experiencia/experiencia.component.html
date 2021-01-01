@@ -3,8 +3,10 @@
     <div class="card">
       <div class="card-header bg-success d-flex justify-content-between">
         <h5 class="card-title text-white">Experiencia laboral</h5>
-        <a [routerLink]="['/agregar-expeciencia']" *ngIf="_serviceUsuario.Auth()">
-          <button type="button" class="btn btn-outline-secondary text-white">Nueva Experiencia</button>
+        <a *ngIf="_serviceUsuario.Auth()">
+          <button type="button" class="btn btn-outline-secondary text-white" data-toggle="modal" data-target="#modal_experiencia">
+            Nueva Experiencia
+          </button>
         </a>
       </div>
       <div class="card-body" *ngFor="let trabajo of trabajos">
@@ -22,7 +24,7 @@
                         <h5>{{trabajo.exp_cargo}}</h5>  
                       </div>
                       <div class="col-md-12" >
-                        <p>{{trabajo.exp_direccion}}</p>  
+                        <p>{{trabajo.exp_empresa}}, {{trabajo.exp_direccion}}</p>  
                       </div>
 
                       <div class="col-md-6">
@@ -37,22 +39,107 @@
               </div>
               <div class="col-md-4 card_actividades">
                 <span class="badge badge-secondary">Actividades</span> 
-                <div>
-                  <p class="text-white">{{trabajo.exp_actividades}}</p>
+                <ul *ngFor="let actividad of trabajo.exp_actividades">
+                  <li class="text-white">{{actividad}}</li>
+                </ul>
+                <div >
+                  <p class="text-white"></p>
                 </div>  
               </div>
               <div class="col-md-4 card_actividades">
-                  <span class="badge badge-primary">Tecnologias</span>
-                  <div>
-                    <p class="text-white">{{trabajo.exp_tecnologias}}</p>
-                  </div>  
+                  <span class="badge badge-secondary">Tecnologias</span>
+                  <div class="row">
+                    <div class="col-md-4" *ngFor="let tecnologia of trabajo.exp_tecnologias">
+                      <label class="text-white"><input type="checkbox" checked disabled> {{tecnologia}}</label>
+                    </div>
+                  </div>
               </div>
-
-            </div>
-
+          </div>
+          <div class="d-flex mt-2 justify-content-end">
+            <a [routerLink]="['/editar-experiencia',trabajo.exp_id]" class="btn btn-success btn-sm">
+              <i class="fa fa-edit"></i>
+            </a>
+            <button class="btn btn-danger btn-sm" (click)="eliminar_experiencia(trabajo.exp_id)">
+              <i class="fa fa-trash"></i>
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modal_experiencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #201c38;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Cargando nueva experiencia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #formExperiencia="ngForm">
+                <div class="form-group">
+                 <label for="empresa">Empresa</label>
+                 <input type="text" placeholder="Empresa" name="empresa" #empresa="ngModel" [(ngModel)]="modelo.empresa" 
+                 class="form-control" required>
+                </div>
+                <div class="form-group">
+                 <label for="direcion">Direccion</label>
+                 <input type="text" placeholder="direccion" name="direccion" #direccion="ngModel" [(ngModel)]="modelo.direccion" class="form-control" required>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                     <label for="duracion">Años duracion</label>
+                     <select name="duracion" name="duracion" #duracion="ngModel" [(ngModel)]="modelo.duracion" class="form-control" required>
+                       <option value="1">1</option>
+                       <option value="2">2</option>
+                       <option value="3">3</option>
+                       <option value="4">4</option>
+                       <option value="5">5</option>
+                     </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                     <label for="inicio">Fecha Inicio</label>
+                     <input type="date" placeholder="Fecha de inicio" name="inicio" #inicio="ngModel" [(ngModel)]="modelo.inicio" class="form-control" required>
+                    </div>                 
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                   <div class="form-group">
+                     <label for="fin">Fecha Fin</label>
+                     <input type="date" placeholder="Fecha de salida" name="fin" #fin="ngModel" [(ngModel)]="modelo.fin" class="form-control" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                 <label for="cargo">Cargo</label>
+                 <input type="text" placeholder="cargo" name="cargo" #cargo="ngModel" [(ngModel)]="modelo.cargo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                   <label for="descripcion">Descripcion</label>
+                   <textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                 <label for="actividades">Actividades</label>
+                 <textarea name="actividades" #actividades="ngModel" [(ngModel)]="modelo.actividad" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                 <label for="tecnologia">Tecnologias</label>
+                 <textarea name="tecnologia" #tecnologia="ngModel" [(ngModel)]="modelo.tecnologia" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                  <input type="button" class="btn btn-success" value="Cargar imagen" data-dismiss="modal" (click)="nueva_experiencia(formExperiencia)"
+                  style="width: 100%;" [disabled]="!formExperiencia.form.valid"> 
+                </div>
+              </form>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!--FIN DEL MODAL -->
     </div>
   </div>
 </div>

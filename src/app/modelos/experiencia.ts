@@ -10,7 +10,6 @@ export class Experiencia{
         public descripcion:string,
         public actividad:string,
         public tecnologia:string,
-        public proyecto_id:Number,
         public activo:number
     ){
 

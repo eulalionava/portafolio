@@ -28,7 +28,7 @@ export class ProyectosComponent implements OnInit {
     public _serviceUsuario:UsuarioService,
     private _serviceTecnologia:TecnologiaService
   ) { 
-    this.modelo = new Proyecto(1,'','','1',1,1);
+    this.modelo = new Proyecto(1,'','','1',1,'',1);
   }
 
   ngOnInit() {
@@ -42,6 +42,7 @@ export class ProyectosComponent implements OnInit {
   getProyectos(){
     this._serviceProyecto.getProyectos().subscribe(
       response=>{
+        console.log(response);
         this.proyectos = response['proyectos'];
       },
       error=>{
