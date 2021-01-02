@@ -115,29 +115,33 @@
               <div class="modal-body">
                 <form #formAgregar="ngForm">
                   <div class="form-group">
-                    <div class="alert alert-danger" *ngIf="msj_error">{{msjerror}}</div>
+                    <div class="alert alert-danger" *ngIf="msj_error">{{mensaje}}</div>
                   </div>
                   <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="tecnologia.nombre"
                      class="form-control" required>
+                     <span *ngIf="!nombre.valid &&  nombre.touched" class="text-danger">Es un campo obligatorio</span>
                   </div>
                   <div class="form-group">
                     <label for="descripcion">Descripcion:</label>
                     <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="tecnologia.descripcion"
                      class="form-control" required>
+                     <span *ngIf="!descripcion.valid &&  descripcion.touched" class="text-danger">Es un campo obligatorio</span>
                   </div>
                   <div class="form-group">
                     <label for="tipo">Tipo Tecnologia:</label>
-                    <select name="tipo" id="" class="form-control" #tipo="ngModel" [(ngModel)]="tecnologia.tipo">
+                    <select name="tipo" class="form-control" #tipo="ngModel" [(ngModel)]="tecnologia.tipo">
                       <option *ngFor="let tipo of tipos_tecnologia" value="{{tipo.tipo_id}}">{{tipo.tipo_nombre}}</option>
                     </select>
+                    <span *ngIf="!tipo.valid &&  tipo.touched" class="text-danger">Es un campo obligatorio</span>
                   </div>
                   <div class="form-group">
                     <label for="imagen">Seleccionar imagen:</label>
                     <input type="file" name="imagen"
                      (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
                   </div>
+                  <input type="button" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
                   <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
                   [disabled]="!formAgregar.form.valid">
                 </form>

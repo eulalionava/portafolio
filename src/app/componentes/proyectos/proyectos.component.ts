@@ -81,18 +81,18 @@ export class ProyectosComponent implements OnInit {
   }
 
   editarProyecto(idproyecto){
-    // this._serviceProyecto.getProyecto(idproyecto).subscribe(
-    //   response=>{
-    //     this.getproyecto = response['proyecto'];
-    //     this.modelo.id = this.getproyecto['pro_id'];
-    //     this.modelo.nombre = this.getproyecto['pro_nombre'];
-    //     this.modelo.descripcion = this.getproyecto['pro_descripcion']
-    //     console.log(response);
-    //   },
-    //   error=>{
-    //     console.log(<any>error);
-    //   }
-    // );
+    this._serviceProyecto.getProyecto(idproyecto).subscribe(
+      response=>{
+        this.getproyecto = response['proyecto'];
+        this.modelo.id = this.getproyecto['pro_id'];
+        this.modelo.nombre = this.getproyecto['pro_nombre'];
+        this.modelo.descripcion = this.getproyecto['pro_descripcion']
+        console.log(response);
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    );
   }
 
   guardarCambios(idproyecto){
@@ -134,16 +134,20 @@ export class ProyectosComponent implements OnInit {
 
   //AGREGAR UN NUEVO PROYECTO
   agregarProyecto(form){
-    this._serviceProyecto.addProyecto(this.modelo).subscribe(
-      response=>{
-        form.clean();
-        this.getProyectos();
-      },
-      error=>{
-        console.log(error);
-        alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
-      }
-    )
+    if(this.modelo.tipo != ""){
+      this._serviceProyecto.addProyecto(this.modelo).subscribe(
+        response=>{
+          form.reset();
+          this.getProyectos();
+        },
+        error=>{
+          console.log(error);
+          alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
+        }
+      )
+    }else{
+      alert("Seleccionar tipo de proyecto");
+    }
   }
 
   //EIMINAR UN PROYECTO

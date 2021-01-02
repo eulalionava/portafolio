@@ -20,6 +20,7 @@ export class TecnologiaComponent implements OnInit {
   public tecnologia:Tecnologia;
   public mitoken:any;
   public msj_error:boolean;
+  public mensaje='';
 
   public datos = {
     'id':1,
@@ -58,7 +59,6 @@ export class TecnologiaComponent implements OnInit {
           this.tecnologias = response['tecnologias'];
         }else{
           this.tecnologias = [];
-          console.log(response['message']);
         }
       },
       error=>{
@@ -117,22 +117,28 @@ export class TecnologiaComponent implements OnInit {
   //Metodo para agregar nueva tecnologia
   agregarTecnologia(form){
     if(this.fileToUpload && this.fileToUpload.length > 0){
-        console.log(this.tecnologia);
-          this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
-            respuesta=>{
-              console.log(respuesta);
-              if(respuesta['ok']){
-                this.listaTecnologias();
-              }else{
-                this.msj_error = respuesta['message'];
-                form.reset();
-              }
-            },
-            error=>{
-              alert("Upss!! algo anda mal");
-              console.log(<any>error);
+      if(this.tecnologia.tipo != ""){
+        this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
+          respuesta=>{
+            if(respuesta['ok']){
+              this.listaTecnologias();
+            }else{
+              this.msj_error = respuesta['message'];
+              form.reset();
             }
-          )
+          },
+          error=>{
+            alert("Upss!! algo anda mal");
+            console.log(<any>error);
+          }
+        )
+      }else{
+        this.msj_error = true;
+      this.mensaje = "Debes eligir el tipo de tecnologia";
+      }
+    }else{
+      this.msj_error = true;
+      this.mensaje = "Debes eligir una imagen";
     }
 
   }

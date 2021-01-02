@@ -80,12 +80,15 @@
               <form #formExperiencia="ngForm">
                 <div class="form-group">
                  <label for="empresa">Empresa</label>
-                 <input type="text" placeholder="Empresa" name="empresa" #empresa="ngModel" [(ngModel)]="modelo.empresa" 
-                 class="form-control" required>
+                 <input type="text" placeholder="Empresa" name="empresa" #empresa="ngModel"  [(ngModel)]="modelo.empresa" 
+                 class="form-control" required required pattern="[A-Za-z0-9]+">
+                 <span *ngIf="!empresa.valid && empresa.touched" class="text-danger">Solo se permiten numeros y letras. Es un campo obligatorio</span>
                 </div>
                 <div class="form-group">
                  <label for="direcion">Direccion</label>
-                 <input type="text" placeholder="direccion" name="direccion" #direccion="ngModel" [(ngModel)]="modelo.direccion" class="form-control" required>
+                 <input type="text" placeholder="direccion" name="direccion" #direccion="ngModel" [(ngModel)]="modelo.direccion" class="form-control" 
+                 required pattern="[A-Za-z0-9]+">
+                 <span *ngIf="!direccion.valid &&  direccion.touched" class="text-danger">Solo se permiten numeros y letras. Es un campo obligatorio</span>
                 </div>
                 <div class="row">
                   <div class="col-md-4 col-sm-12">
@@ -116,11 +119,15 @@
 
                 <div class="form-group">
                  <label for="cargo">Cargo</label>
-                 <input type="text" placeholder="cargo" name="cargo" #cargo="ngModel" [(ngModel)]="modelo.cargo" class="form-control" required>
+                 <input type="text" placeholder="cargo" name="cargo" #cargo="ngModel" [(ngModel)]="modelo.cargo" class="form-control" required
+                 pattern="[A-Za-z]+">
+                 <span *ngIf="!cargo.valid &&  cargo.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</span>
                 </div>
                 <div class="form-group">
                    <label for="descripcion">Descripcion</label>
-                   <textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion" class="form-control" required></textarea>
+                   <textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion" class="form-control" required
+                   pattern="[A-Za-z]+"></textarea>
+                   <span *ngIf="!descripcion.valid &&  descripcion.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</span>
                 </div>
                 <div class="form-group">
                  <label for="actividades">Actividades</label>

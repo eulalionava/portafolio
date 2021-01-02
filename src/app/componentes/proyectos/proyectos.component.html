@@ -105,12 +105,14 @@
                 <div class="form-group">
                   <label for="nombre">Nombre:</label>
                   <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="modelo.nombre"
-                   class="form-control" placeholder="Nombre proyecto" required>
+                   class="form-control" placeholder="Nombre proyecto" required pattern="[A-Za-z ]+">
+                   <span *ngIf="!nombre.valid &&  nombre.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</span>
                 </div>
                 <div class="form-group">
                   <label for="descripcion">Descripcion:</label>
                   <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion"
-                   class="form-control" placeholder="Descripcion de proyecto" required>
+                   class="form-control" placeholder="Descripcion de proyecto" required pattern="[A-Za-z ]+">
+                   <SPan *ngIf="!descripcion.valid && descripcion.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</SPan>
                 </div>
                 <label for="">Tecnologias:</label>
                 <div class="form-group" *ngFor="let tecnologia of lista_tecnologias">
