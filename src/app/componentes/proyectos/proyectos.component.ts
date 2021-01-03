@@ -167,7 +167,6 @@ export class ProyectosComponent implements OnInit {
   //Detecta cambios en la imagen
   fileChangeEvent(fileInput:any){
     this.fileToUpload =<Array<File>>fileInput.target.files
-    console.log(this.fileToUpload);
   }
 
   //METODO QUE CARGA IMAGNES A UN PROYECTO

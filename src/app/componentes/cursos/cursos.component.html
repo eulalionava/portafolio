@@ -7,61 +7,66 @@
   <div *ngIf="cursos != ''; else elseCurso ">
     <div class="row">
       <div class="col-md-4 col-sm-12" *ngFor="let curso of cursos">
-        <div class="card">
-          <img src="../../../assets/IMG/csharp.png" class="card-img-top" alt="imagen">
+        <div class="card d-flex mb-3">
+          <img src="http://localhost:4000/get_img_curso/{{curso.curso_img}}" class="card-img-top" alt="imagen" style="height: 150px;">
           <div class="card-body">
             <h4>{{curso.curso_nombre}}</h4>
             <h5>Plataforma {{curso.curso_plataforma}}</h5>
             <span class="badge badge-success">Completado</span>
+            <div class="w-100"></div>
+            <button type="button" class="btn btn-danger btn-sm" (click)="eliminar_curso(curso.curso_id)" style="float: right;">
+              <i class="fa fa-trash"></i>
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalNuevoCurso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #201c38;">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Curso</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form #formAgregar="ngForm">
-              <div class="form-group">
-                <div class="alert alert-danger" *ngIf="msj_error">{{mensaje}}</div>
-              </div>
-              <div class="form-group">
-                <label for="nombre">Nombre curso:</label>
-                <input type="text" name="curso" #curso="ngModel" [(ngModel)]="modelo.nombre"
-                 class="form-control" required pattern="[A-Za-z0-9 ]+">
-                 <span *ngIf="!curso.valid &&  curso.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
-              </div>
-              <div class="form-group">
-                <label for="descripcion">Plataforma:</label>
-                <input type="text" name="plata" #plata="ngModel" [(ngModel)]="modelo.Plataforma"
-                 class="form-control" required pattern="[A-Za-z0-9 ]+">
-                 <span *ngIf="!plata.valid &&  plata.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
-              </div>
-              <div class="form-group">
-                <label for="imagen">Seleccionar certificado:</label>
-                <input type="file" name="imagen"
-                 (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
-              </div>
-              <input type="button" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
-              <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
-              [disabled]="!formAgregar.form.valid">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--FIN DEL MODAL -->
     
   </div>
   <ng-template #elseCurso>
     <div class="alert alert-danger">No se encontraron resultados</div>
   </ng-template>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalNuevoCurso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #201c38;">
+          <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Curso</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #formAgregar="ngForm">
+            <div class="form-group">
+              <div class="alert alert-danger" *ngIf="msj_error">{{mensaje}}</div>
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre curso:</label>
+              <input type="text" name="curso" #curso="ngModel" [(ngModel)]="modelo.nombre"
+               class="form-control" required pattern="[A-Za-z0-9 ]+">
+               <span *ngIf="!curso.valid &&  curso.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Plataforma:</label>
+              <input type="text" name="plata" #plata="ngModel" [(ngModel)]="modelo.plataforma"
+               class="form-control" required pattern="[A-Za-z0-9 ]+">
+               <span *ngIf="!plata.valid &&  plata.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
+            </div>
+            <div class="form-group">
+              <label for="imagen">Seleccionar certificado:</label>
+              <input type="file" name="imagen"
+               (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
+            </div>
+            <input type="button" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
+            <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
+            [disabled]="!formAgregar.form.valid">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIN DEL MODAL -->
 </div>

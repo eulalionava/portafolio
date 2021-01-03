@@ -19,4 +19,29 @@ export class CursoService{
 
         return this._http.get(this.url + 'getAllCursos',{headers:headers});
     }
+
+    addCurso(curso:Curso,files:Array<File>){
+
+        const formData = new FormData();
+
+        for(var i=0; i < files.length; i++){
+            formData.append('imagen',files[i],files[i].name);
+        }
+        formData.append('nombre',curso.nombre);
+        formData.append('plataforma',curso.plataforma);
+
+
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'addCurso',formData);
+
+    }
+
+    eliminar_curso(id_curso){
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','Application/json');
+
+        return this._http.post(this.url + 'delete_curso/'+ id_curso,{headers:headers});
+    }
 }

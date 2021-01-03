@@ -13,6 +13,7 @@ export class CursosComponent implements OnInit {
 
   public cursos = [];
   public modelo:Curso;
+  public fileUpload:any;
 
   constructor(
     private _serviceCurso:CursoService
@@ -28,8 +29,39 @@ export class CursosComponent implements OnInit {
   getCursos(){
     this._serviceCurso.obtener_cursos().subscribe(
       response=>{
-        console.log(response);
         this.cursos = response['cursos'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    );
+  }
+
+  fileChangeEvent(fileInput:any){
+    this.fileUpload = <Array<File>>fileInput.target.files;
+  }
+
+  //AGREGAR UN NUEVO CURSO 
+  agregarTecnologia(form){
+    if( this.fileUpload && this.fileUpload.length > 0){
+      this._serviceCurso.addCurso(this.modelo,this.fileUpload).subscribe(
+        response=>{
+          this.getCursos();
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      );
+    }else{
+      alert("Es necesario que selecciones un archivo de tipo imagen");
+    }
+  }
+
+  //ELIMINAR EL REGISTRO DE UN CURSO
+  eliminar_curso(id_curso){
+    this._serviceCurso.eliminar_curso(id_curso).subscribe(
+      response=>{
+        this.getCursos();
       },
       error=>{
         console.log(<any>error);
