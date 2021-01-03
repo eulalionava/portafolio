@@ -16,6 +16,7 @@ import { EditexperienciaComponent } from './componentes/editexperiencia/editexpe
 import { AddadminComponent } from './componentes/addadmin/addadmin.component';
 import { EditarProyectoComponent } from './componentes/editar-proyecto/editar-proyecto.component';
 import { ImagenesComponent } from './componentes/imagenes/imagenes.component';
+import { CursosComponent } from './componentes/cursos/cursos.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ImagenesComponent } from './componentes/imagenes/imagenes.component';
     AddadminComponent,
     EditarProyectoComponent,
     ImagenesComponent,
+    CursosComponent,
   ],
   imports: [
     BrowserModule,

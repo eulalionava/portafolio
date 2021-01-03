@@ -39,8 +39,7 @@ export class EditarProyectoComponent implements OnInit {
         this.proyecto = response['proyecto'];
         this.modelo.id          = this.proyecto_id;
         this.modelo.nombre      = this.proyecto['pro_nombre'];
-        this.modelo.descripcion =  this.proyecto['pro_descripcion'];
-
+        this.modelo.descripcion = this.proyecto['pro_descripcion'];
 
         let tecnologias = this.proyecto['pro_tecnologias'].split(',');
 
@@ -65,16 +64,41 @@ export class EditarProyectoComponent implements OnInit {
   }
 
   guardar_cambios(){
-    console.log("bien");
-    this._serviceProyecto.editProyecto(this.modelo).subscribe(
-      response=>{
-        this._router.navigate(['/proyectos']);
+    let valida = this.validaciones(this.modelo);
 
-      },
-      error=>{
-        console.log(<any>error);
+    if(valida.valido){
+      this._serviceProyecto.editProyecto(this.modelo).subscribe(
+        response=>{
+          this._router.navigate(['/proyectos']);
+  
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      );
+    }else{
+      alert(valida.message);
+    }
+  }
+
+  //FUNCION PARA VALIDACIONES DE CAMPOS
+  validaciones(datos:Proyecto){
+    if(datos.nombre == ""){
+      return {
+        valido:false,
+        message:"El campo nombre, no se permite vacio"
       }
-    );
+    }else if(datos.descripcion == ""){
+      return {
+        valido:false,
+        message:"El campo descripcion, no se permite vacio"
+      }
+    }else{
+      return {
+        valido:true,
+        message:"Campos validados correctamente"
+      }
+    }
   }
 
 }

@@ -158,23 +158,34 @@ export class TecnologiaComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput:any){
-    this.fileToUpload =<Array<File>>fileInput.target.files;
-    this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
-      response=>{
-        this.tecnologia.imagen = response['nombreimg'];
-      },
-      error=>{
-        console.log(<any>error);
-      }
-    )
+    this.fileToUpload = <Array<File>>fileInput.target.files;
+    if(this.fileToUpload.length > 0){
+      this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
+        response=>{
+          if(response['ok']){
+            this.tecnologia.imagen = response['nombreimg'];
+          }else{
+            alert(response['message']);
+          }
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      )
+    }else{
+      alert("Selecciona un archivo");
+    }
   }
 
   changeImage(fileInput:any,imagen,id){
     this.fileToUpload =<Array<File>>fileInput.target.files;
     this._serviceTecnologia.changeImg(this.fileToUpload,imagen,id).subscribe(
       response=>{
-        console.log(response);
-        this.listaTecnologias();
+        if(response['ok']){
+          this.listaTecnologias();
+        }else{
+          alert(response['message']);
+        }
       },
       error=>{
         console.log(<any>error);

@@ -11,6 +11,7 @@ import { EditexperienciaComponent } from '../app/componentes/editexperiencia/edi
 import { AddadminComponent } from './componentes/addadmin/addadmin.component';
 import { EditarProyectoComponent } from './componentes/editar-proyecto/editar-proyecto.component';
 import { ImagenesComponent } from './componentes/imagenes/imagenes.component';
+import { CursosComponent } from './componentes/cursos/cursos.component';
 
 
 //Rutas
@@ -26,6 +27,7 @@ const appRoutes:Routes = [
     {path:'editar-experiencia/:idExp',component:EditexperienciaComponent},
     {path:'editar-proyecto/:id',component:EditarProyectoComponent},
     {path:'agregar-admin',component:AddadminComponent},
+    {path:'cursos',component:CursosComponent},
 
     {path:'**', component:InicioComponent}
   
