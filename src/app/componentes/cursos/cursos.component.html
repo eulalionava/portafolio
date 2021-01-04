@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="alert alert-success"><strong>Certificados de cursos</strong>
+  <div class="alert alert-success"><strong>Certificado de cursos</strong>
     <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalNuevoCurso" >
       Nuevo curso
     </button>
@@ -14,7 +14,7 @@
             <h5>Plataforma {{curso.curso_plataforma}}</h5>
             <span class="badge badge-success">Completado</span>
             <div class="w-100"></div>
-            <button type="button" class="btn btn-danger btn-sm" (click)="eliminar_curso(curso.curso_id)" style="float: right;">
+            <button type="button" class="btn btn-danger btn-sm" (click)="eliminar_curso(curso.curso_id,curso.curso_img)" style="float: right;">
               <i class="fa fa-trash"></i>
             </button>
           </div>
@@ -27,7 +27,7 @@
   <ng-template #elseCurso>
     <div class="alert alert-danger">No se encontraron resultados</div>
   </ng-template>
-  
+
   <!-- Modal -->
   <div class="modal fade" id="modalNuevoCurso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -61,7 +61,7 @@
                (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
             </div>
             <input type="button" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
-            <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
+            <input type="button" class="btn btn-primary" (click)="agregarCurso(formAgregar)" value="Agregar" data-dismiss="modal"
             [disabled]="!formAgregar.form.valid">
           </form>
         </div>

@@ -38,10 +38,12 @@ export class CursoService{
 
     }
 
-    eliminar_curso(id_curso){
+    eliminar_curso(id_curso,ruta_img){
+        let params = JSON.stringify({id:id_curso,ruta:ruta_img});
+        
         let headers = new HttpHeaders();
         headers = headers.set('Content-Type','Application/json');
 
-        return this._http.post(this.url + 'delete_curso/'+ id_curso,{headers:headers});
+        return this._http.post(this.url + 'delete_curso',params,{headers:headers});
     }
 }

@@ -42,10 +42,11 @@ export class CursosComponent implements OnInit {
   }
 
   //AGREGAR UN NUEVO CURSO 
-  agregarTecnologia(form){
+  agregarCurso(form){
     if( this.fileUpload && this.fileUpload.length > 0){
       this._serviceCurso.addCurso(this.modelo,this.fileUpload).subscribe(
         response=>{
+          form.reset();
           this.getCursos();
         },
         error=>{
@@ -58,8 +59,8 @@ export class CursosComponent implements OnInit {
   }
 
   //ELIMINAR EL REGISTRO DE UN CURSO
-  eliminar_curso(id_curso){
-    this._serviceCurso.eliminar_curso(id_curso).subscribe(
+  eliminar_curso(id_curso,ruta_img){
+    this._serviceCurso.eliminar_curso(id_curso,ruta_img).subscribe(
       response=>{
         this.getCursos();
       },
