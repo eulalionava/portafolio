@@ -83,6 +83,15 @@ export class ProyectoService{
 
     }
 
+    //SERVICIO DE ENVIAR CORREO
+    enviar_correo(id_proyecto){
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'proyecto_me_gusta/'+id_proyecto+'',{headers:headers});
+
+    }
+
     //Servicio para subir imagen y agregar una nueva tenologia
     fileRequest(url:string,params:Array<string>,files:Array<File>){
         //Regresa una promesa

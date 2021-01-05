@@ -64,7 +64,7 @@ export class ProyectosComponent implements OnInit {
     );
   }
 
-  //Funcion para borrar un proyecto
+  //FUNCION PARA BORRAR EL REGISTRO DE UN PROYECTO
   borrarproyecto(idproyecto){
     if(confirm("¿ Desea continuar ?")){
       this._serviceProyecto.borrrarProyecto(idproyecto).subscribe(
@@ -80,6 +80,7 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
+  //OBTENER DATOS DE UN RESGISTRO PARA PROXIMA 
   editarProyecto(idproyecto){
     this._serviceProyecto.getProyecto(idproyecto).subscribe(
       response=>{
@@ -94,7 +95,7 @@ export class ProyectosComponent implements OnInit {
       }
     );
   }
-
+  //GUARDAR CAMBIOS DE UN REGISTRO
   guardarCambios(idproyecto){
     this._serviceProyecto.editProyecto(this.modelo).subscribe(
       response=>{
@@ -107,6 +108,7 @@ export class ProyectosComponent implements OnInit {
     )
   }
 
+  //LISTA DE CHECKS
   onChange(event){
     let valor = event.target.value;
     //Busca y remueve
@@ -184,6 +186,22 @@ export class ProyectosComponent implements OnInit {
             }
           )
     }
+  }
+
+  //METODO QUE ENVIA CORREO CUANDO UNA PERSONA LE DA ME GUSTA A UN PROYECTO
+  me_gusta(id_proyecto){
+    document.getElementById('like'+ id_proyecto).style.color='blue';
+
+    this._serviceProyecto.enviar_correo(id_proyecto).subscribe(
+      response=>{
+        console.log(response);
+        if(response['ok']){
+          alert(response['message']);
+        }
+      },error=>{
+        console.log(<any>error);
+      }
+    );
   }
 
 
