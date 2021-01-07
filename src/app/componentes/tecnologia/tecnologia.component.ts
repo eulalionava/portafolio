@@ -9,12 +9,18 @@ import {Tecnologia} from '../../modelos/tecnologia';
 @Component({
   selector: 'app-tecnologia',
   templateUrl: './tecnologia.component.html',
+  styleUrls:['./tecnologia.component.css'],
   providers:[TecnologiaService,UsuarioService]
 })
 export class TecnologiaComponent implements OnInit {
   public tecnologias:any;
   public getTecnologia:any;
+  public tipos_tecnologia:any;
+  public fileToUpload:any;
   public tecnologia:Tecnologia;
+  public mitoken:any;
+  public msj_error:boolean;
+  public mensaje='';
 
   public datos = {
     'id':1,
@@ -30,11 +36,15 @@ export class TecnologiaComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) { 
     //INSTANCIIA EL MODELO
-    this.tecnologia = new Tecnologia(1,'','','','','');
+    this.tecnologia = new Tecnologia(1,'','','','',1);
+    this.msj_error = false
   }
 
   ngOnInit() {
+    this.mitoken = JSON.parse( localStorage.getItem('admin'));
+
     this.listaTecnologias();
+    this.getAllTipos();
     this.cd.detectChanges();
   }
   
@@ -45,12 +55,10 @@ export class TecnologiaComponent implements OnInit {
   listaTecnologias(){
     this._serviceTecnologia.listadoTec().subscribe(
       response=>{
-        console.log(response);
         if(response['ok']){
           this.tecnologias = response['tecnologias'];
         }else{
           this.tecnologias = [];
-          console.log(response['message']);
         }
       },
       error=>{
@@ -59,12 +67,23 @@ export class TecnologiaComponent implements OnInit {
     )
   }
 
+  //LISTADO DE TIPOS DE TECNOLOGIA
+  getAllTipos(){
+    this._serviceTecnologia.allTipos().subscribe(
+      response=>{
+        this.tipos_tecnologia = response['tipos'];
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
+  }
+
   //ELIMINAR UNA TECNOLOGIA
   borrar(idTec){
     if(confirm("¿ La imagen se borrara,desea proseguir ?")){
-      this._serviceTecnologia.eliminarTecnologia(idTec).subscribe(
+      this._serviceTecnologia.eliminarTecnologia(idTec,this.mitoken['token']).subscribe(
         response=>{
-          console.log(response);
           if(response['ok']){
             this.listaTecnologias();
             this._router.navigate(['/tecnologia']);
@@ -95,9 +114,37 @@ export class TecnologiaComponent implements OnInit {
     )
   }
 
+  //Metodo para agregar nueva tecnologia
+  agregarTecnologia(form){
+    if(this.fileToUpload && this.fileToUpload.length > 0){
+      if(this.tecnologia.tipo != ""){
+        this._serviceTecnologia.addTecnologia(this.tecnologia).subscribe(
+          respuesta=>{
+            if(respuesta['ok']){
+              this.listaTecnologias();
+            }else{
+              this.msj_error = respuesta['message'];
+              form.reset();
+            }
+          },
+          error=>{
+            alert("Upss!! algo anda mal");
+            console.log(<any>error);
+          }
+        )
+      }else{
+        this.msj_error = true;
+      this.mensaje = "Debes eligir el tipo de tecnologia";
+      }
+    }else{
+      this.msj_error = true;
+      this.mensaje = "Debes eligir una imagen";
+    }
+
+  }
+
   //GUARDAR CAMBIOS
   guardarCambios(idTec){
-
     this.datos.id = idTec;
     this._serviceTecnologia.editartecnologia(this.datos).subscribe(
       response=>{
@@ -110,4 +157,39 @@ export class TecnologiaComponent implements OnInit {
     )
   }
 
+  fileChangeEvent(fileInput:any){
+    this.fileToUpload = <Array<File>>fileInput.target.files;
+    if(this.fileToUpload.length > 0){
+      this._serviceTecnologia.subirImage(this.fileToUpload).subscribe(
+        response=>{
+          if(response['ok']){
+            this.tecnologia.imagen = response['nombreimg'];
+          }else{
+            alert(response['message']);
+          }
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      )
+    }else{
+      alert("Selecciona un archivo");
+    }
+  }
+
+  changeImage(fileInput:any,imagen,id){
+    this.fileToUpload =<Array<File>>fileInput.target.files;
+    this._serviceTecnologia.changeImg(this.fileToUpload,imagen,id).subscribe(
+      response=>{
+        if(response['ok']){
+          this.listaTecnologias();
+        }else{
+          alert(response['message']);
+        }
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
+  }
 }

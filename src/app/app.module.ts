@@ -12,12 +12,11 @@ import { ContactoComponent } from './componentes/contacto/contacto.component';
 import { TecnologiaComponent } from './componentes/tecnologia/tecnologia.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { EditarTecComponent } from './componentes/editar-tec/editar-tec.component';
-import { AgregarTecComponent } from './componentes/agregar-tec/agregar-tec.component';
-import { AddproyectoComponent } from './componentes/addproyecto/addproyecto.component';
-import { CargarImgsComponent } from './componentes/cargar-imgs/cargar-imgs.component';
 import { EditexperienciaComponent } from './componentes/editexperiencia/editexperiencia.component';
 import { AddadminComponent } from './componentes/addadmin/addadmin.component';
-import { AddexperienciaComponent } from './componentes/addexperiencia/addexperiencia.component';
+import { EditarProyectoComponent } from './componentes/editar-proyecto/editar-proyecto.component';
+import { ImagenesComponent } from './componentes/imagenes/imagenes.component';
+import { CursosComponent } from './componentes/cursos/cursos.component';
 
 @NgModule({
   declarations: [
@@ -29,12 +28,11 @@ import { AddexperienciaComponent } from './componentes/addexperiencia/addexperie
     TecnologiaComponent,
     LoginComponent,
     EditarTecComponent,
-    AgregarTecComponent,
-    AddproyectoComponent,
-    CargarImgsComponent,
     EditexperienciaComponent,
     AddadminComponent,
-    AddexperienciaComponent
+    EditarProyectoComponent,
+    ImagenesComponent,
+    CursosComponent,
   ],
   imports: [
     BrowserModule,

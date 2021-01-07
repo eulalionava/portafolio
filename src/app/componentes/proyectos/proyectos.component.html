@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <h5>Proyectos laborales y personales</h5>
-    <a [routerLink]="['/agregar-proyecto']" *ngIf="_serviceUsuario.Auth()">
-      <button class="btn btn-success btn-sm float-right mb-1">
+    <a *ngIf="_serviceUsuario.Auth()">
+      <button class="btn btn-success btn-sm float-right mb-1" data-toggle="modal" data-target="#modalNuevo">
         <span class="fa fa-plus"></span>
         Proyecto
       </button>
@@ -10,75 +10,149 @@
   </div>
   
   <div class="w-100"></div>
-    <div class="col-md-12">
-      <div class="card bg-default">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-md-4" *ngFor="let proyecto of proyectos; let j=index">
 
-              <div class="card">
-                <a [routerLink]="['/cargar-imagenes',proyecto.pro_id]">
-                  <div class="card-header" style="background: #d0c9c9;">
-                    <p class="card-title text-white">
-                      <strong>{{proyecto.pro_nombre}}</strong>
-                      <a class="btn btn-secondary btn-sm float-right" [routerLink]="['/cargar-imagenes',proyecto.pro_id]"
-                      *ngIf="_serviceUsuario.Auth()" >
-                        <i class="fas fa-upload"></i>
-                      </a>
-                    </p>
-                  </div>
-                </a>
-                <div class="card-body">
-                    {{proyecto.pro_descripcion}}
-                </div>
-                <div class="card-footer" *ngIf="_serviceUsuario.Auth()">
-                  <div class="btn-group">
-                    <a role="button" class="btn btn-danger btn-sm" (click)="borrarproyecto(proyecto.pro_id)">
-                      <span class="fa fa-trash"></span>
-                      Borrar
-                    </a>
-                    <a href="#proyecto{{proyecto.pro_id}}" role="button"
-                    class="btn btn-primary btn-sm" data-toggle="modal" (click)="editarproyecto(proyecto.pro_id)">
-                      <span class="fa fa-edit"></span>
-                      Editar
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body" *ngFor="let proyecto of proyectos">
+
+        <div class="card">
+          <div class="card body" style="padding: 1rem;">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="card card-imagen">
+                  <div class="card-body">
+                    <a [routerLink]="['/imagenes',proyecto.pro_id]">
+                      <img src="../../../assets/proyecto/proyecto.png" class="card-img-top" alt="imagen">
                     </a>
                   </div>
                 </div>
               </div>
-              <!-- Modal -->
-              <div class="modal fade" id="proyecto{{proyecto.pro_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar proyecto</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
+              <div class="col-md-9">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h4 class="d-flex mt-4">{{proyecto.pro_nombre}}</h4>
+                    <p>{{proyecto.pro_descripcion}}</p>
+                    <p>
+                      <i class="fas fa-star"></i>
+                    </p>
+                    <p>{{proyecto.pro_tipo}}</p>
+                    <div class="d-flex justify-content-start">
+                        <div class="col-md-6 botones">Autor</div>
+                        <div class="col-md-6 botones">Eulalio cruz nava</div>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                      <a [routerLink]="['/editar-proyecto',proyecto.pro_id]" *ngIf="_serviceUsuario.Auth()">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+                          <i class="fa fa-edit"></i>
                         </button>
-                      </div>
-                      <div class="modal-body" *ngIf="getproyecto">
-                        <div class="form-group">
-                          <input type="text" value="{{getproyecto['pro_nombre']}}" name="nombre" 
-                          class="form-control" [(ngModel)]="modelo.nombre">
-                        </div>
-                        <div class="form-group">
-                          <textarea name="descripcion" class="form-control" [(ngModel)]="modelo.descripcion" >
-                            {{getproyecto['pro_descripcion']}}
-                          </textarea>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getproyecto['pro_id'])">Guardar Cambios</button>
-                      </div>
+                      </a>
+                      <button class="btn btn-danger" (click)="eliminar_proyecto(proyecto.pro_id)" *ngIf="_serviceUsuario.Auth()">
+                        <i class="fa fa-trash"></i>
+                      </button>
                     </div>
                   </div>
+                  <div class="col-md-3">
+                    <div *ngIf="_serviceUsuario.Auth(); else elseheard">
+                      <button class="btn btn-success btn-sm float-right mb-1" data-toggle="modal" data-target="#modalUpload">
+                        <i class="fas fa-upload"></i>
+                      </button>
+                    </div>
+                    <ng-template #elseheard>
+                      <button type="button" class="btn btn-outline-primary btn-sm float-right mb-1" id="like{{proyecto.pro_id}}"
+                      (click)="me_gusta(proyecto.pro_id)">
+                        <i class="far fa-thumbs-up"></i>
+                      </button>
+                    </ng-template>
+                  </div>
                 </div>
-                <!--FIN DEL MODAL -->
+              </div>
             </div>
           </div>
-          
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #201c38;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">Cargar imagenes del proyecto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <input type="file" name="imagen"
+                   (change)="fileChangeEvent($event)" class="form-control btn-sm" multiple required> 
+                </div>
+                <div class="form-group">
+                  <input type="button" value="Cargar imagen" class="form-control btn-sm" data-dismiss="modal" (click)="cargar_imagenes(proyecto.pro_id)" required> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--FIN DEL MODAL -->
+
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #201c38;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Tecnologia</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #formAgregar="ngForm">
+                <div class="form-group">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="modelo.nombre"
+                   class="form-control" placeholder="Nombre proyecto" required pattern="[A-Za-z ]+">
+                   <span *ngIf="!nombre.valid &&  nombre.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</span>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripcion:</label>
+                  <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="modelo.descripcion"
+                   class="form-control" placeholder="Descripcion de proyecto" required pattern="[A-Za-z ]+">
+                   <SPan *ngIf="!descripcion.valid && descripcion.touched" class="text-danger">Solo se permiten letras. Es un campo obligatorio</SPan>
+                </div>
+                <label for="">Tecnologias:</label>
+                <div class="form-group" *ngFor="let tecnologia of lista_tecnologias">
+                  <div class="col-md-12 col-sm-12" style="font-family: 'Font Awesome 5 Pro';">
+                    <input type="checkbox" name="php" value="{{tecnologia.tec_id}}" (change)="onChange($event)">
+                     {{tecnologia.tec_nombre}}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tipo">Estrellas:</label>
+                  <select name="tipo" class="form-control" #tipo="ngModel" [(ngModel)]="modelo.estrella">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="tipoproyecto">Tipo proyecto</label>
+                  <select name="tipoproyecto" class="form-control" #tipoproyecto="ngModel" [(ngModel)]="modelo.tipo">
+                    <option value="Laboral">Laboral</option>
+                    <option value="Personal">Personal</option>
+                  </select>
+                </div>
+                <input type="button" class="btn btn-primary" (click)="agregarProyecto(formAgregar)" value="Agregar" data-dismiss="modal"
+                [disabled]="!formAgregar.form.valid">
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+      <!--FIN DEL MODAL -->
+
     </div>
-  
+  </div>
 </div>

@@ -1,0 +1,14 @@
+.corazon{
+    background: #15d6cd40;
+}
+
+.headercontenido{
+    padding: 0;
+    background: rgba(179,220,237,1);
+    box-shadow: 0px 1px 5px 1px #9e9797;
+}
+._file{
+    opacity: 0;
+    width: 0;
+    height: 0px;
+}

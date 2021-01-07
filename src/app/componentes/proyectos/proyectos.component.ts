@@ -1,34 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ProyectoService } from '../../services/proyecto.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { TecnologiaService } from "../../services/tecnologia.service";
+
+
 import { Proyecto } from '../../modelos/proyecto';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
   styleUrls: ['./proyectos.component.css'],
-  providers:[ProyectoService,UsuarioService]
+  providers:[ProyectoService,UsuarioService,TecnologiaService]
 })
 export class ProyectosComponent implements OnInit {
+
   public modelo:Proyecto;
   public getproyecto:any;
   public imagenes = [];
   public proyectos = [];
+  public lista_tecnologias:any;
+  public lista_checks = [];
+  public fileToUpload:any;
 
   constructor(
     private _serviceProyecto:ProyectoService,
-    public _serviceUsuario:UsuarioService
+    public _serviceUsuario:UsuarioService,
+    private _serviceTecnologia:TecnologiaService
   ) { 
-    this.modelo = new Proyecto(1,'','','1');
+    this.modelo = new Proyecto(1,'','','1',1,'',1);
   }
 
   ngOnInit() {
     this.getProyectos();
+    this.getListaTecnologias();
+
+    
   }
 
+  //LISTADO DE TODOS LOS PROYECTOS
   getProyectos(){
     this._serviceProyecto.getProyectos().subscribe(
       response=>{
+        console.log(response);
         this.proyectos = response['proyectos'];
       },
       error=>{
@@ -37,7 +51,20 @@ export class ProyectosComponent implements OnInit {
     )
   }
 
-  //Funcion para borrar un proyecto
+  //LISTADO DE TODAS LAS TECNOLOGIAS
+  getListaTecnologias(){
+    this._serviceTecnologia.listadoTec().subscribe(
+      response=>{
+        this.lista_tecnologias = response['tecnologias'];
+        console.log(this.lista_tecnologias);
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    );
+  }
+
+  //FUNCION PARA BORRAR EL REGISTRO DE UN PROYECTO
   borrarproyecto(idproyecto){
     if(confirm("¿ Desea continuar ?")){
       this._serviceProyecto.borrrarProyecto(idproyecto).subscribe(
@@ -53,7 +80,8 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
-  editarproyecto(idproyecto){
+  //OBTENER DATOS DE UN RESGISTRO PARA PROXIMA 
+  editarProyecto(idproyecto){
     this._serviceProyecto.getProyecto(idproyecto).subscribe(
       response=>{
         this.getproyecto = response['proyecto'];
@@ -67,7 +95,7 @@ export class ProyectosComponent implements OnInit {
       }
     );
   }
-
+  //GUARDAR CAMBIOS DE UN REGISTRO
   guardarCambios(idproyecto){
     this._serviceProyecto.editProyecto(this.modelo).subscribe(
       response=>{
@@ -79,5 +107,102 @@ export class ProyectosComponent implements OnInit {
       }
     )
   }
+
+  //LISTA DE CHECKS
+  onChange(event){
+    let valor = event.target.value;
+    //Busca y remueve
+    if(this.lista_checks.includes(valor)){
+      let remover = this.lista_checks.indexOf(valor);
+      this.lista_checks.splice(remover,1);
+
+    }else{
+
+      if(event.target.checked){
+        //Agrega
+        this.lista_checks.push(valor);
+  
+      }
+    }
+    let lista = "";
+    
+    this.lista_checks.forEach(item=>{
+      lista+=item+',';
+    });
+
+    this.modelo.tecnologia = lista;
+
+  }
+
+  //AGREGAR UN NUEVO PROYECTO
+  agregarProyecto(form){
+    if(this.modelo.tipo != ""){
+      this._serviceProyecto.addProyecto(this.modelo).subscribe(
+        response=>{
+          form.reset();
+          this.getProyectos();
+        },
+        error=>{
+          console.log(error);
+          alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
+        }
+      )
+    }else{
+      alert("Seleccionar tipo de proyecto");
+    }
+  }
+
+  //EIMINAR UN PROYECTO
+  eliminar_proyecto(id_proyecto){
+    if(confirm("Desea eliminar este proyecto")){
+      this._serviceProyecto.borrrarProyecto(id_proyecto).subscribe(
+        response=>{
+          this.getProyectos();
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      );
+    }
+  }
+
+  //Detecta cambios en la imagen
+  fileChangeEvent(fileInput:any){
+    this.fileToUpload =<Array<File>>fileInput.target.files
+  }
+
+  //METODO QUE CARGA IMAGNES A UN PROYECTO
+  cargar_imagenes(id){
+    if(this.fileToUpload && this.fileToUpload.length > 0){
+          this._serviceProyecto.add_imagenes(this.fileToUpload,id).subscribe(
+            respuesta=>{
+              if(respuesta['ok']){
+                this.getProyectos();
+                alert(respuesta['message']);
+              }
+            },
+            error=>{
+              alert("Upss!! error 400 el servidor no pudo interpretar la solicitud dada una sintaxis inválida.");
+            }
+          )
+    }
+  }
+
+  //METODO QUE ENVIA CORREO CUANDO UNA PERSONA LE DA ME GUSTA A UN PROYECTO
+  me_gusta(id_proyecto){
+    document.getElementById('like'+ id_proyecto).style.color='blue';
+
+    this._serviceProyecto.enviar_correo(id_proyecto).subscribe(
+      response=>{
+        console.log(response);
+        if(response['ok']){
+          alert(response['message']);
+        }
+      },error=>{
+        console.log(<any>error);
+      }
+    );
+  }
+
 
 }

@@ -6,3 +6,16 @@
 .display-4{
     text-align: center;
 }
+.rama{
+    border-bottom: 3px solid #007bff;
+}
+.carrera{
+    border-bottom: 3px solid #007bff;
+}
+.card-body img{
+    margin-top: -3rem;
+    z-index: 2;
+}
+.datos{
+    background: linear-gradient(to right, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 28%, rgba(181,198,208,1) 51%, rgba(206,222,232,1) 80%, rgba(224,239,249,1) 100%);
+}

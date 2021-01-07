@@ -23,7 +23,8 @@ export class ProyectoService{
         return this._http.post(this.url + 'addProyecto',params,{headers:headers});
     }
 
-    addIMG(imagen:Array<File>,idproyecto){
+    add_imagenes(imagen:Array<File>,idproyecto){
+        
         const formData = new FormData();
 
         for(var i= 0; i < imagen.length; i++){
@@ -35,6 +36,7 @@ export class ProyectoService{
         return this._http.post(this.url + 'subeIMG',formData);
 
     }
+
     //SERVICIO QUE ONTIENE TODOS LOS PROYECTOS
     getProyectos(){
         let headers = new HttpHeaders();
@@ -71,6 +73,23 @@ export class ProyectoService{
         headers = headers.set('Content-Type','application/json');
 
         return this._http.put(this.url + 'borrarproyecto/'+idProyecto+'',{headers:headers});
+    }
+    get_all_images(id_proyecto){
+
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.get(this.url + 'getAllImagenes/'+id_proyecto+'',{headers:headers});
+
+    }
+
+    //SERVICIO DE ENVIAR CORREO
+    enviar_correo(id_proyecto){
+        let headers = new HttpHeaders();
+        headers = headers.set('Content-Type','application/json');
+
+        return this._http.post(this.url + 'proyecto_me_gusta/'+id_proyecto+'',{headers:headers});
+
     }
 
     //Servicio para subir imagen y agregar una nueva tenologia

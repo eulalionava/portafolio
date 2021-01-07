@@ -1,0 +1,24 @@
+<div class="alert alert-success d-flex justify-content-between">
+  <p><strong>Proyecto:</strong> {{proyecto.pro_nombre}}</p> 
+  <a [routerLink]="['/proyectos']">
+    Regresar
+  </a>
+</div>
+
+<div class="container">
+  <div *ngIf="imagenes != ''; else elseBlock ">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let image of imagenes">
+        <div class="card d-flex mb-2">
+          <div class="card-header">
+            <img class="card-img-top" src="http://localhost:4000/getImagenPorProyecto/{{image.img_url}}" alt=""
+            style="height: 50vh;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="alert alert-danger">Este proyecto no tiene imagenes cargadas</div>
+  </ng-template>
+</div>

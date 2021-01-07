@@ -1,0 +1,45 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-title">Detalles del proyecto</h6>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <input type="text" name="nombre" class="form-control form-control-lg" value="{{proyecto.pro_nombre}}"
+             #nombre="ngModel" [(ngModel)]="modelo.nombre">
+          </div>
+          <div class="form-group">
+            <input type="text" name="descripcion" class="form-control form-control-lg" value="{{proyecto.pro_descripcion}}"
+            #descripcion="ngModel" [(ngModel)]="modelo.descripcion">
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <a [routerLink]="['/proyectos']">
+            <input type="button" value="cancelar" class="btn btn-outline-danger">
+          </a>
+          <input type="button" value="Guaradar cambios" (click)="guardar_cambios()" class="btn btn-outline-success">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-title">Tecnologias</h6>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-start tecnologias" *ngFor="let lista of lista_tecnologias">
+              <div class="col-md-2 col-sm-12">
+                <input type="checkbox" class="checkbox" checked>
+              </div>
+              <div class="col-md-10 col-sm-12">
+                <p>{{lista.tec_nombre}}</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

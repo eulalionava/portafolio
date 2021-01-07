@@ -4,69 +4,156 @@
     <h5>Las tecnologias que he trabajado son:  </h5>
   </div>
   <div class="col-md-6">
-    <a [routerLink]="['/agregar-tecnologia']" *ngIf="_serviceUsuario.Auth()">
-      <button type="button" class="btn btn-primary btn-sm float-right">
+    <a *ngIf="_serviceUsuario.Auth()">
+      <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalNuevo" >
         <span class="fa fa-plus"></span>
         Agregar
       </button>
     </a>
   </div>
-
   <div class="w-100 mt-3"></div>
-    <div class="col-md-4" *ngFor="let tecnologia of tecnologias">
-      <div class="card">
-        <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" class="card-image-top" alt="c#" height="150">
-        <div class="card-body">
-          <h3 class="card-title text-center">{{tecnologia.tec_nombre}}</h3>
-          <p class="card-text">{{tecnologia.tec_descripcion}}</p>
-          <div class="btn-group">
-            <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
-              <span class="fa fa-trash"></span>
-              Borrar
-            </button>
-            <a href="#tec{{tecnologia.tec_id}}" role="button" class="btn btn-success btn-sm" data-toggle="modal" 
-            (click)="editar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
-              <span class="fa fa-edit"></span>
-              Editar
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- INICIO DEL MODAL-->
 
-      <!-- Modal -->
-      <div class="modal fade" id="tec{{tecnologia.tec_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar Tecnologia</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div *ngIf="getTecnologia">
-                <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" alt="Imagen" 
-                class="img-thumbnail mb-3" height="100">
-                <div class="form-group">
-                  <input type="text" value="{{getTecnologia['tec_nombre']}}" class="form-control" 
-                  name="nombre" [(ngModel)]="datos.nombre">
-                </div>
-                <div class="form-group">
-                  <textarea name="descrip" class="form-control" [(ngModel)]="datos.descrip">
-                      
-                  </textarea>
+  <div class="col-md-12">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="col-md-12" *ngFor="let tecnologia of tecnologias">
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="card d-flex mb-3">
+                <div class="card-header headercontenido">
+
+                  <div class="row">
+                    <div class="col-md-2 d-flex justify-content-center align-items-center corazon">
+                      <button class="btn btn-outline-secondary" *ngIf="_serviceUsuario.Auth(); else elseBlock">
+                        <i class="fa fa-upload 7x">
+                          <input type="file" name="" class="_file" title="Cambiar foto" (change)="changeImage($event,tecnologia.tec_imagen,tecnologia.tec_id)">
+                        </i>
+                      </button>
+                      <ng-template #elseBlock><i class="fa fa-upload 5x"></i></ng-template>
+                    </div>
+                    <div class="col-md-2 d-flex mt-2">
+                      <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" class="rounded" alt="c#" height="100">
+                    </div>
+                    <div class="col-md-8">
+                      <h3 class="card-title">{{tecnologia.tec_nombre}}</h3>
+                      <p class="card-text">{{tecnologia.tec_descripcion}}</p>
+
+                      <div class="w-100 d-flex mb-2"></div>
+    
+                      <div class="d-flex justify-content-end mb-2 mr-2">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="borrar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
+                            <span class="fa fa-trash"></span>
+                            Borrar
+                          </button>
+                          <a href="#tec{{tecnologia.tec_id}}" role="button" class="btn btn-success btn-sm" data-toggle="modal" 
+                          (click)="editar(tecnologia.tec_id)" *ngIf="_serviceUsuario.Auth()">
+                            <span class="fa fa-edit"></span>
+                            Editar
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+
+                </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getTecnologia['tec_id'])">Guardar Cambios</button>
+
+          </div>
+
+          <!-- INICIO DEL MODAL-->
+    
+          <!-- Modal -->
+          <div class="modal fade" id="tec{{tecnologia.tec_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color: #201c38;">
+                  <h5 class="modal-title text-white" id="exampleModalLabel">Editar Tecnologia</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div *ngIf="getTecnologia">
+                    <img src="http://localhost:4000/getIMG/{{tecnologia.tec_imagen}}" alt="Imagen" 
+                    class="img-thumbnail mb-3" height="100">
+                    <div class="form-group">
+                      <input type="text" value="{{getTecnologia['tec_nombre']}}" class="form-control" 
+                      name="nombre" [(ngModel)]="datos.nombre">
+                    </div>
+                    <div class="form-group">
+                      <textarea name="descrip" class="form-control" [(ngModel)]="datos.descrip">
+                          
+                      </textarea>
+                      </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(getTecnologia['tec_id'])">Guardar Cambios</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--FIN DEL MODAL -->
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #201c38;">
+                <h5 class="modal-title text-white" id="exampleModalLabel">Nueva Tecnologia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form #formAgregar="ngForm">
+                  <div class="form-group">
+                    <div class="alert alert-danger" *ngIf="msj_error">{{mensaje}}</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="tecnologia.nombre"
+                     class="form-control" required pattern="[A-Za-z0-9 ]+">
+                     <span *ngIf="!nombre.valid &&  nombre.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="descripcion">Descripcion:</label>
+                    <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="tecnologia.descripcion"
+                     class="form-control" required pattern="[A-Za-z0-9 ]+">
+                     <span *ngIf="!descripcion.valid &&  descripcion.touched" class="text-danger">Solo se permiten numeros y letras. Campo obligatorio</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="tipo">Tipo Tecnologia:</label>
+                    <select name="tipo" class="form-control" #tipo="ngModel" [(ngModel)]="tecnologia.tipo">
+                      <option *ngFor="let tipo of tipos_tecnologia" value="{{tipo.tipo_id}}">{{tipo.tipo_nombre}}</option>
+                    </select>
+                    <span *ngIf="!tipo.valid &&  tipo.touched" class="text-danger">Es un campo obligatorio</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="imagen">Seleccionar imagen:</label>
+                    <input type="file" name="imagen"
+                     (change)="fileChangeEvent($event)" class="form-control btn-sm" required> 
+                  </div>
+                  <input type="button" class="btn btn-danger" value="Cancelar" data-dismiss="modal">
+                  <input type="button" class="btn btn-primary" (click)="agregarTecnologia(formAgregar)" value="Agregar" data-dismiss="modal"
+                  [disabled]="!formAgregar.form.valid">
+                </form>
+              </div>
             </div>
           </div>
         </div>
+        <!--FIN DEL MODAL -->
+        
       </div>
-      <!--FIN DEL MODAL -->
     </div>
+
+  </div>
 </div>
 
